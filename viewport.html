@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>剧照展示 | 家书</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts 书法字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* 书法字体 */
+        .calligraphy {
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        /* 图片容器 3:2 */
+        .photo-container {
+            aspect-ratio: 3 / 2;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 图片铺满 */
+        .photo-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* 拍摄地文字 */
+        .location-text {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            color: #f5f5dc; /* 米黄色 */
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+            letter-spacing: 0.1em;
+        }
+
+        /* 导航点 */
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .dot.active {
+            background: #f5f5dc;
+            transform: scale(1.3);
+        }
+
+        /* 左右箭头 */
+        .arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #f5f5dc;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        .arrow:hover {
+            background: rgba(0,0,0,0.6);
+        }
+        .arrow.left {
+            left: 2rem;
+        }
+        .arrow.right {
+            right: 2rem;
+        }
+
+        /* 黑色外框 */
+        .gallery-frame {
+            border: 8px solid #000;
+            background-color: #000;
+            box-sizing: border-box;
+            width: 100vw;
+            height: 100vh;
+            max-width: 1200px;
+            max-height: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 米白色标题 */
+        .gallery-title {
+            color: #f5f5dc;
+            text-align: center;
+            padding: 1rem 0;
+            font-size: 2rem;
+            font-family: 'Ma Shan Zheng', cursive;
+            letter-spacing: 0.1em;
+        }
+
+        /* 图片区域 */
+        .gallery-body {
+            flex: 1;
+            position: relative;
+        }
+    </style>
+</head>
+
+<body class="bg-black m-0 p-0 flex items-center justify-center min-h-screen">
+
+    <!-- 黑色外框 + 轮播 -->
+    <div class="gallery-frame">
+        <!-- 米白色标题 -->
+        <div class="gallery-title">剧照展示</div>
+
+        <!-- 图片轮播区域 -->
+        <div class="gallery-body relative">
+            <!-- 图片容器 -->
+            <div class="photo-container" id="photoContainer">
+                <img src="./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(1).png" alt="剧照">
+                <div class="location-text calligraphy">新疆·和田影剧院</div>
+            </div>
+
+            <!-- 左右箭头 -->
+            <div class="arrow left" onclick="changePhoto(-1)">‹</div>
+            <div class="arrow right" onclick="changePhoto(1)">›</div>
+
+            <!-- 底部导航点 -->
+            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex space-x-3">
+                <span class="dot active" onclick="goToPhoto(0)"></span>
+                <span class="dot" onclick="goToPhoto(1)"></span>
+                <span class="dot" onclick="goToPhoto(2)"></span>
+                <span class="dot" onclick="goToPhoto(3)"></span>
+                <span class="dot" onclick="goToPhoto(4)"></span>
+                <span class="dot" onclick="goToPhoto(5)"></span>
+                <span class="dot" onclick="goToPhoto(6)"></span>
+                <span class="dot" onclick="goToPhoto(7)"></span>
+                <span class="dot" onclick="goToPhoto(8)"></span>
+                <span class="dot" onclick="goToPhoto(9)"></span>
+                <span class="dot" onclick="goToPhoto(10)"></span>
+                <span class="dot" onclick="goToPhoto(11)"></span>
+                <span class="dot" onclick="goToPhoto(12)"></span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 剧照数据
+        const photos = [
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(1).png",  location: "新疆·和田影剧院" },
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(2).png",  location: "新疆·和田影剧院" },
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(3).png",  location: "新疆·和田影剧院" },
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(4).png",  location: "新疆·和田影剧院" },
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(5).png",  location: "新疆·和田影剧院" },
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(6).png",  location: "新疆·和田影剧院" },
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(7).png",  location: "新疆·和田影剧院" },
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(8).png",  location: "新疆·和田影剧院" },
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(9).png",  location: "新疆·和田影剧院" },
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(10).png", location: "新疆·和田影剧院" },
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(11).png", location: "新疆·和田影剧院" },
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(12).png", location: "新疆·和田影剧院" },
+            { src: "./img/viewport/%E6%96%B0%E7%96%86%C2%B7%E5%92%8C%E7%94%B0%E5%BD%B1%E5%89%A7%E9%99%A2%20%20(13).png", location: "新疆·和田影剧院" }
+        ];
+
+        let currentIndex = 0;
+
+        function changePhoto(direction) {
+            currentIndex = (currentIndex + direction + photos.length) % photos.length;
+            updatePhoto();
+        }
+
+        function goToPhoto(index) {
+            currentIndex = index;
+            updatePhoto();
+        }
+
+        function updatePhoto() {
+            const container = document.getElementById('photoContainer');
+            const photo = photos[currentIndex];
+            
+            container.innerHTML = `
+                <img src="${photo.src}" alt="剧照">
+                <div class="location-text calligraphy">${photo.location}</div>
+            `;
+
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changePhoto(-1);
+            if (e.key === 'ArrowRight') changePhoto(1);
+        });
+    </script>
+
+</body>
+</html>

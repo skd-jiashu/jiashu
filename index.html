@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<!-- 文档类型声明，使用HTML5标准 -->
+<html lang="zh-CN">
+<!-- HTML根元素，lang属性设置为中文（简体） -->
+
+<head>
+    <!-- 文档头部，包含元数据和资源引用 -->
+    <meta charset="UTF-8">
+    <!-- 字符编码设置，UTF-8支持中文显示 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 响应式视口设置，确保在移动设备上正确显示 -->
+    <title>社科大舞台剧-家书</title>
+    <!-- 网页标题，显示在浏览器标签页 -->
+
+    <!-- Tailwind CSS框架 - 提供实用优先的CSS类，快速构建现代UI -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Anime.js动画库 - 用于创建流畅的JavaScript动画效果 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    
+    <!-- p5.js创意编程库 - 用于在#p5-container中创建动态粒子背景效果 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+    
+    <!-- ECharts图表库 - 用于数据可视化（当前页面未使用，预留用于统计图表） -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    
+    <!-- Splide轮播图库 - 用于实现图片和评价的轮播效果 -->
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    
+    <!-- Splide轮播图样式表 -->
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    
+    <!-- Google Fonts字体库 - 引入思源宋体和思源黑体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="main.css">
+    <script src="https://kit.fontawesome.com/1edc433974.js" crossorigin="anonymous"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    const mobileAboutBtn = document.querySelector('.about-mobile button');
+    const mobileAboutContent = document.querySelector('.about-mobile div');
+    
+    if (mobileAboutBtn) {
+        mobileAboutBtn.addEventListener('click', function() {
+            mobileAboutContent.classList.toggle('hidden');
+            this.querySelector('svg').classList.toggle('rotate-180');
+        });
+    }
+});
+</script>
+
+    <style>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&display=swap">
+    </style>
+</head>
+
+<body class="min-h-screen">
+    <!-- 导航栏组件 - 固定定位，毛玻璃效果 -->
+        <nav class="fixed top-0 w-full bg-white/90 backdrop-blur-md z-50 border-b border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-4 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-left">
+                    <h1 class="text-2xl font-bold text-gray-900" style="font-family: 'Noto Serif SC', serif;">
+                        <img src="img/jiashulogo.png" alt="LOGO" class="w-9 h-15 mr-auto">
+                    </h1>
+                </div>
+
+                <!-- 桌面端导航菜单 -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="index.html" class="nav-link text-gray-700 hover:text-red-800 font-medium">首页</a>
+                    <a href="cast.html" class="nav-link text-gray-700 hover:text-red-800 font-medium">演员阵容</a>
+                    <a href="schedule.html" class="nav-link text-gray-700 hover:text-red-800 font-medium">演出信息</a>
+
+                    <!-- 替换桌面端"关于我们"部分 -->
+                <div class="relative group">
+                    <a href="about.html" class="nav-link text-gray-700 hover:text-red-800 font-medium">关于我们</a>
+                    <div class="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transi tion-all duration-300 transform translate-y-2 group-hover:translate-y-0">
+                        <div class="p-4">
+                            <div class="space-y-2">
+                                <a href="https://book.yunzhan365.com/fdmax/dnif/mobile/index.html" target="_blank" class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <div>
+                                        <div class="font-medium text-gray-900">剧本</div>
+                                        <div class="text-sm text-gray-500">编剧 张树辉 李梦辰</div>
+                                    </div>
+                                </a>
+                                <a href="https://book.yunzhan365.com/fdmax/wlcl/mobile/index.html" target="_blank" class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <div>
+                                        <div class="font-medium text-gray-900">画册</div>
+                                        <div class="text-sm text-gray-500">制作 牟思源</div>
+                                    </div>
+                                </a>
+                                <a href="viewport.html" target="_blank" class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors">
+                                    <div>
+                                        <div class="font-medium text-gray-900">剧照</div>
+                                        <div class="text-sm text-gray-500">舞台场景展示</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+
+                <!-- 移动端菜单按钮 -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-700 hover:text-red-800">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 移动端下拉菜单 -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-gray-100">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="index.html" class="block px-3 py-2 text-gray-700 hover:text-red-800 font-medium">首页</a>
+                <a href="cast.html" class="block px-3 py-2 text-gray-700 hover:text-red-800 font-medium">演员阵容</a>
+                <a href="schedule.html" class="block px-3 py-2 text-gray-700 hover:text-red-800 font-medium">演出信息</a>
+
+                <!-- 移动端关于我们展开项 -->
+                <div class="about-mobile">
+                    <button class="w-full text-left px-3 py-2 text-gray-700 hover:text-red-800 font-medium flex justify-between items-center">
+                        关于我们
+                        <svg class="w-4 h-4 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                    <div class="hidden pl-4 space-y-1">
+                        <a href="https://book.yunzhan365.com/fdmax/dnif/mobile/index.html" target="_blank" class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors" target="_blank" class="block px-3 py-2 text-sm text-gray-600 hover:text-red-800">剧本</a>
+                        <a href="https://book.yunzhan365.com/fdmax/wlcl/mobile/index.html" target="_blank" class="flex items-center p-3 rounded-lg hover:bg-gray-50 transition-colors" target="_blank" class="block px-3 py-2 text-sm text-gray-600 hover:text-red-800">画册</a>
+                        <a href="viewport.html" target="_blank" class="block px-3 py-2 text-sm text-gray-600 hover:text-red-800">剧照</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+<!-- 移动端交互脚本 -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const mobileAboutBtn = document.querySelector('.about-mobile button');
+    const mobileAboutContent = document.querySelector('.about-mobile div');
+    
+    if (mobileAboutBtn) {
+        mobileAboutBtn.addEventListener('click', function() {
+            mobileAboutContent.classList.toggle('hidden');
+            this.querySelector('svg').classList.toggle('rotate-180');
+        });
+    }
+});
+</script>
+    
+    
+
+    <!-- 英雄区域 - 全屏展示，包含动态背景 -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16">
+        <!-- pt-16为固定导航栏留出空间 -->
+        <div id="p5-container" class="absolute inset-0"></div>
+        <!-- p5.js动态粒子背景容器 -->
+        
+        <div class="floating-particles">
+            <!-- 静态装饰性粒子元素，通过CSS动画实现浮动效果 -->
+            <div class="particle" style="left: 10%; top: 20%; width: 4px; height: 4px; animation-delay: 0s;"></div>
+            <div class="particle" style="left: 80%; top: 30%; width: 6px; height: 6px; animation-delay: 2s;"></div>
+            <div class="particle" style="left: 60%; top: 60%; width: 3px; height: 3px; animation-delay: 4s;"></div>
+            <div class="particle" style="left: 30%; top: 70%; width: 5px; height: 5px; animation-delay: 1s;"></div>
+            <div class="particle" style="left: 90%; top: 80%; width: 4px; height: 4px; animation-delay: 3s;"></div>
+        </div>
+        
+        <!-- 插入家书水印层 -->
+        <img src="./img/jiashu1.png" class="watermark absolute inset-0 w-full h-full object-cover opacity-10 pointer-events-none z-0">
+        
+        <!-- 英雄区域内容层 - 相对定位确保在背景上方 -->
+        <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+            <!-- 主标题，id用于JS动画控制 -->
+            
+            <h1 class="hero-title text-6xl md:text-8xl font-bold mb-6 opacity-0" id="hero-title">家书</h1>
+            <!-- 副标题 -->
+            <p class="text-2xl md:text-2xl text-gray-600 mb-8 max-w-3xl mx-auto opacity-2" id="hero-subtitle">
+                因为一封信 而去寻找一个人
+                <br>
+                山川会记得，日月会记得，我们会记得
+            </p>
+            <!-- 按钮组 -->
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center opacity-0" id="hero-buttons">
+                <button onclick="scrollToSection('letters')" class="bg-red-800 hover:bg-red-900 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105">
+                    阅读家书
+                </button>
+                <button onclick="window.location.href='schedule.html'" class="border-2 border-red-800 text-red-800 hover:bg-red-800 hover:text-white px-8 py-3 rounded-full font-medium transition-all duration-300">
+                    演出信息
+                </button>
+            </div>
+        </div>
+        
+        <!-- 英雄区 剧照区域轮播图 -->
+        <div class="absolute bottom-8 translate-x-1/2 max-w-3xl px-4 opacity-0" id="hero-carousel">
+            <div class="splide" id="hero-splide">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        
+                        <li class="splide__slide">
+                            <img src="img/homepage%20honor/liyanyuan-8.jpg" alt="舞台剧照" class="w-full h-32 object-cover rounded-lg shadow-lg">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="img/homepage%20honor/renyi-1.jpg" alt="演员剧照" class="w-full h-32 object-cover rounded-lg shadow-lg">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="img/homepage%20honor/liyanyuan-1.jpg" alt="演员剧照" class="w-full h-32 object-cover rounded-lg shadow-lg">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="img/homepage%20honor/liyanyuan-5.jpg" alt="演员剧照" class="w-full h-32 object-cover rounded-lg shadow-lg">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="img/homepage%20honor/liyanyuan-6.jpg" alt="演员剧照" class="w-full h-32 object-cover rounded-lg shadow-lg">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="img/homepage%20honor/liyanyuan-7.jpg" alt="首页展示图" class="w-full h-32 object-cover rounded-lg shadow-lg">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="img/homepage%20honor/hezhao-1.jpg" alt="首页展示图" class="w-full h-32 object-cover rounded-lg shadow-lg">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="img/homepage%20honor/hezhao-2.jpg" alt="首页展示图" class="w-full h-32 object-cover rounded-lg shadow-lg">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="img/homepage%20honor/hezhao-4.jpg" alt="首页展示图" class="w-full h-32 object-cover rounded-lg shadow-lg">
+                        </li>
+                        <li class="splide__slide">
+                            <img src="img/homepage%20honor/hezhao-5.jpg" alt="首页展示图" class="w-full h-32 object-cover rounded-lg shadow-lg">
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 家书内容展示区 - 包含三封家书的卡片列表 -->
+    <section id="letters" class="py-20 px-4 sm:px-6 lg:px-8">
+        <!-- 通过ID作为锚点，支持导航跳转 -->
+        <div class="max-w-6xl mx-auto">
+            <!-- 区域标题 -->
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style="font-family: 'Noto Serif SC', serif;">剧中烈士家书</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    道不尽兼爱无私的情怀 写不完血浓于水的眷恋
+                </p>
+            </div>
+            
+            <!-- 家书卡片网格布局 - 响应式设计 -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <!-- 第一封家书卡片 -->
+                <div class="letter-card bg-white rounded-lg shadow-lg overflow-hidden scroll-reveal" data-letter="1">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <!-- 圆形图标 -->
+                            <div class="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-blue-800 font-bold"><i class="fa-solid fa-envelope"></i></span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">移去孝顺大多数痛苦的人类</h3>
+                                <p class="text-sm text-gray-600">冷少农致母亲书</p>
+                            </div>
+                        </div>
+                        <!-- 家书摘要文本 -->
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            "母亲：好久没有接着你们的信了，更是好久没有聆着（听）你老人家慈爱亲切的教训了…"
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 第二封家书卡片 -->
+                <div class="letter-card bg-white rounded-lg shadow-lg overflow-hidden scroll-reveal" data-letter="2">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-red-800 font-bold"><i class="fa-solid fa-envelope"></i></span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">社会之新光在照耀着你</h3>
+                                <p class="text-sm text-gray-600">冷少农写给儿子的信</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            "苍儿：收到你的信，使我无限的欢欣！使我无限的惭愧！你居然长这么大了，你居然能…"
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 第一封家书卡片 -->
+                <div class="letter-card bg-white rounded-lg shadow-lg overflow-hidden scroll-reveal" data-letter="3">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <!-- 圆形图标 -->
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                <span class="text-green-800 font-bold"><i class="fa-solid fa-envelope"></i></span>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-900">你的母亲是为国而牺牲的</h3>
+                                <p class="text-sm text-gray-600">赵一曼写给儿子的信</p>
+                            </div>
+                        </div>
+                        <!-- 家书摘要文本 -->
+                        <p class="text-gray-700 text-sm leading-relaxed">
+                            "宁儿！母亲对于你没有能尽到教育的责任，实在是遗憾的事情。母亲因为坚决地做了反满…"
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 家书详细内容展示区 - 默认隐藏，点击卡片后显示 -->
+            <div id="letter-display" class="hidden">
+                <div class="letter-content p-8 rounded-lg shadow-xl max-w-4xl mx-auto">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <h3 id="letter-title" class="text-2xl font-bold text-gray-900 mb-2"></h3>
+                            <p id="letter-author" class="text-gray-600"></p>
+                        </div>
+                        <!-- 关闭按钮 -->
+                        <button id="close-letter" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+                    </div>
+                    <!-- 家书正文内容 -->
+                    <div id="letter-text" class="text-gray-800 text-lg leading-relaxed"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+   <!-- 新闻报道模块 - 插入在家书内容展示区之后，统计数据展示区之前 -->
+<section class="py-20 bg-gradient-to-br from-red-50 to-orange-50">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- 区域标题 -->
+        <div class="text-center mb-16 scroll-reveal">
+            <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style="font-family: 'Noto Serif SC', serif;">媒体报道</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                记录《家书》舞台剧 每一个重要时刻
+            </p>
+        </div>
+        
+        <!-- 新闻卡片网格布局 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- 新闻卡片1 -->
+            <div class="news-card bg-white rounded-lg shadow-lg overflow-hidden scroll-reveal">
+                 <a href="https://www.peopleapp.com/column/30035417815-500000469923" target="_blank" rel="noopener noreferrer">
+                <img src="img/news/news-1.jpg" alt="中国社科大原创校园舞台剧《家书》再登舞台" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="news-media inline-block bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">人民日报</span>
+                        <time class="text-sm text-gray-500">2023-10-15</time>
+                    </div>
+                    <h3 class="news-title text-xl font-bold text-gray-900 mb-3 line-clamp-2">中国社科大原创校园舞台剧《家书》再登舞台</h3>
+                    <p class="news-lead text-gray-600 leading-relaxed line-clamp-3">
+                       10月13日晚，中国社会科学院大学首部原创校园舞台剧《家书》开演。这是一部讲述百年来两代青年人时空交错、精神引领的红色剧目，将烈士冷少农真挚动人的事迹以生动的表演进行诠释，给师生带来一场爱国精神的艺术滋养。
+                    </p>
+                </div>
+                </a>
+            </div>
+
+            <!-- 新闻卡片2 -->
+            <div class="news-card bg-white rounded-lg shadow-lg overflow-hidden scroll-reveal">
+                 <a href="https://epaper.gmw.cn/gmrb/html/2025-06/14/nw.D110000gmrb_20250614_2-06.htm" target="_blank" rel="noopener noreferrer">
+                <img src="img/news/news-2.png" alt="中国社科大：美育架桥，让红色文化浸润校园" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="news-media inline-block bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">光明日报</span>
+                        <time class="text-sm text-gray-500">2025-06-14</time>
+                    </div>
+                    <h3 class="news-title text-xl font-bold text-gray-900 mb-3 line-clamp-2">中国社科大：美育架桥，让红色文化浸润校园</h3>
+                    <p class="news-lead text-gray-600 leading-relaxed line-clamp-3">
+                       “山川会记得，日月会记得，我们会记得！”随着铮铮誓言响彻舞台，一场《家书》舞台剧的演出落下帷幕。
+                    </p>
+                </div>
+                </a>
+            </div>
+
+             <!-- 新闻卡片3 -->
+            <div class="news-card bg-white rounded-lg shadow-lg overflow-hidden scroll-reveal">
+                 <a href="https://zqb.cyol.com/html/2024-01/13/nw.D110000zgqnb_20240113_1-04.htm" target="_blank" rel="noopener noreferrer">
+                <img src="img/news/news-3.jpg" alt="中国青年报报道" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="news-media inline-block bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">中国青年报</span>
+                        <time class="text-sm text-gray-500">2024-01-13</time>
+                    </div>
+                    <h3 class="news-title text-xl font-bold text-gray-900 mb-3 line-clamp-2">舞台剧《家书》：一场传递红色火种的大学生文化实践</h3>
+                    <p class="news-lead text-gray-600 leading-relaxed line-clamp-3">
+                       “因为一封信，而去寻找一个人，为他拉开舞台的光幕，为他续写理想的征途…”一封家书，一纸情怀，一种精神。近日，一台由中国社会科学院大学学生编写和演绎的红色舞台剧《家书》在贵州省瓮安县第二中学开始了首次校外演出。
+                    </p>
+                </div>
+                </a>
+            </div>
+            
+            <!-- 新闻卡片4 -->
+            <div class="news-card bg-white rounded-lg shadow-lg overflow-hidden scroll-reveal">
+                 <a href="https://news.cyol.com/gb/articles/2023-10/16/content_Q46GoyFjPW.html" target="_blank" rel="noopener noreferrer">
+                <img src="img/news/news-4.jpg" alt="中国青年报报道" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="news-media inline-block bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">中国青年报</span>
+                        <time class="text-sm text-gray-500">2023-10-16</time>
+                    </div>
+                    <h3 class="news-title text-xl font-bold text-gray-900 mb-3 line-clamp-2">社科大原创舞台剧《家书》再演 烈士后代发来手写信感人至深</h3>
+                    <p class="news-lead text-gray-600 leading-relaxed line-clamp-3">
+                      “人们究竟怎样划算？我们只要手段不乱，精神一贯，前途虽是茫茫，自然会有光明的一天！”10月13日晚，中国社会科学院大学首部原创校园舞台剧《家书》开演。
+                    </p>
+                </div>
+                </a>
+            </div>
+            
+            <!-- 新闻卡片5 -->
+            <div class="news-card bg-white rounded-lg shadow-lg overflow-hidden scroll-reveal">
+                <a href="https://xinwen.bjd.com.cn/content/s68ae5279e4b0221b9bec0733.html" target="_blank" rel="noopener noreferrer">
+                <img src="img/news/news-5.jpg" alt="北京日报报道" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="news-media inline-block bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">北京日报</span>
+                        <time class="text-sm text-gray-500">2025-08-27</time>
+                    </div>
+                    <h3 class="news-title text-xl font-bold text-gray-900 mb-3 line-clamp-2">人艺护航京津冀学子登台艺术殿堂，“大手拉小手，拉住了就不想放开”</h3>
+                    <p class="news-lead text-gray-600 leading-relaxed line-clamp-3">
+                       日前，由北京人民艺术剧院发起并主办的“青春绽放·戏聚京津冀——大学生戏剧展演活动”及座谈会圆满落幕，自3月份公开征集参演剧目以来，这场长达五个月的戏剧马拉松，奔向了掌声热烈的终点。
+                    </p>
+                </div>
+                </a>
+            </div>
+            
+            <!-- 新闻卡片6 -->
+            <div class="news-card bg-white rounded-lg shadow-lg overflow-hidden scroll-reveal">
+                 <a href="https://news.cyol.com/gb/articles/2025-07/16/content_lbwbw4fWog.html" target="_blank" rel="noopener noreferrer">
+                <img src="img/news/news-6.jpg" alt="中国青年报报道" class="w-full h-48 object-cover">
+                <div class="p-6">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="news-media inline-block bg-red-100 text-red-800 text-sm font-medium px-3 py-1 rounded-full">中国青年报</span>
+                        <time class="text-sm text-gray-500">2025-06-14</time>
+                    </div>
+                    <h3 class="news-title text-xl font-bold text-gray-900 mb-3 line-clamp-2">打造思想引领好产品·校园好剧 从“小白”到主演 </h3>
+                    <p class="news-lead text-gray-600 leading-relaxed line-clamp-3">
+                       家书，是一种家人之间传递思念的形式。而在中国社会科学院大学学生自导自演的话剧《家书》中，这种思念化为一种不一样的力量，更成为一堂“行走的思政课”。
+                    </p>
+                </div>
+                </a>
+            </div>
+            
+        </div>
+
+        <!-- 查看全部新闻按钮 -->
+        <div class="text-center mt-12 scroll-reveal">
+            <button onclick="window.location.href='https://www.xiaohongshu.com/user/profile/6496d325000000000f005b9d?xsec_token=ABF0qjqyD8WpVgMBKcWQqywHL9bZcQ_zjksS2Os1g7WhM=&xsec_source=pc_note'" class="bg-red-800 hover:bg-red-900 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 transform hover:scale-105">
+                查看更多报道
+            </button>
+        </div>
+    </div>
+</section>
+
+    <!-- 统计数据展示区 - 渐变背景突出重要数据 -->
+    <section class="py-20 bg-gradient-to-br from-red-50 to-orange-50">
+
+        
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 演出场次统计 -->
+                <div class="stats-card p-8 rounded-lg text-center scroll-reveal">
+                    <div class="text-4xl font-bold text-red-800 mb-2" id="performances-count">0</div>
+                    <div class="text-gray-600 font-medium">精彩演出</div>
+                    <div class="text-sm text-gray-500 mt-2">已在全国各地演出</div>
+                </div>
+                
+                
+                <!-- 观众人次统计 -->
+                <div class="stats-card p-8 rounded-lg text-center scroll-reveal">
+                    <div class="text-4xl font-bold text-red-800 mb-2" id="audience-count">0</div>
+                    <div class="text-gray-600 font-medium">感动观众</div>
+                    <div class="text-sm text-gray-500 mt-2">现场观众人次</div>
+                </div>
+                
+                <!-- 巡演城市统计 -->
+                <div class="stats-card p-8 rounded-lg text-center scroll-reveal">
+                    <div class="text-4xl font-bold text-red-800 mb-2" id="cities-count">0</div>
+                    <div class="text-gray-600 font-medium">巡演城市</div>
+                    <div class="text-sm text-gray-500 mt-2">跨越多个省市</div>
+                </div>
+                <br>
+                <p>数据来源-中国社会科学院大学学生艺术团</p>
+            </div>
+        </div>
+    </section>
+
+<br>
+  
+    <font color="grey">
+    <marquee direction="right" scrollamount="6">
+      <h6 style="white-space:nowrap;">
+        哭惨了！<span style="display:inline-block; width:25rem;"></span>
+        烈士太帅，直接破防！<span style="display:inline-block; width:15rem;"></span>
+        思政课还能这么上头？<span style="display:inline-block; width:10rem;"></span>
+        演我妈那灯一亮，秒爆泪！<span style="display:inline-block; width:4rem;"></span>
+        看完给爸妈打了个电话。<span style="display:inline-block; width:19rem;"></span>
+        又走进了一个新的烈士<span style="display:inline-block; width:6rem;"></span>
+        舞台效果绝绝子，完全安利！<span style="display:inline-block; width:17rem;"></span>
+        革命浪漫！
+      </h6>
+    </marquee>
+    <font color="grey">
+    <marquee direction="right" scrollamount="9">
+     <h6 style="white-space:nowrap;">
+        <span style="display:inline-block; width:2rem;"></span>
+        灯光一响，眼泪登场！<span style="display:inline-block; width:4rem;"></span>
+        同学演技开挂，我跪了！<span style="display:inline-block; width:10rem;"></span>
+        结尾谢幕彩蛋直接破防，或许在另一个时空里有一个be结局<span style="display:inline-block; width:18rem;"></span>
+        想二刷，谁组团？<span style="display:inline-block; width:9rem;"></span>
+        向革命先烈致敬！<span style="display:inline-block; width:16rem;"></span>
+        出剧场脚步都是飘的
+      </h6>
+    </marquee>
+    <font color="grey">
+    <marquee direction="right" scrollamount="7">
+     <h6 style="white-space:nowrap;">
+        <span style="display:inline-block; width:8rem;"></span>
+        背景音乐《写故事的人》也太好哭了吧<span style="display:inline-block; width:13rem;"></span>
+        全程鸡皮疙瘩掉一地<span style="display:inline-block; width:16rem;"></span>
+        烈士写信那段不敢呼吸<span style="display:inline-block; width:10rem;"></span>
+        散场灯亮大家红着眼！<span style="display:inline-block; width:15rem;"></span>
+        已安利隔壁宿舍全体！
+      </h6>
+    </marquee>
+
+
+
+
+    <!-- 观众评价轮播区 - 使用Splide实现 -->
+    <section class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+            <font color="grey">
+<!--
+<marquee direction="right"scrollamount="5"><h5>烈士太帅，直接破防！</h5></marquee><br>
+<font color="grey">
+<marquee direction="right"scrollamount="7"><h1>舞台效果绝绝子</h1></marquee><br>
+<font color="grey">
+<marquee direction="right"scrollamount="3"><h6>建议去看的家人们准备好纸巾</h6></marquee><br> -->
+
+
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6" style="font-family: 'Noto Serif SC', serif;">观众反馈</h2>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                写故事有多美 一字一我们
+            </p>
+        </div>
+            </div>
+           <font color="grey">
+<!--
+<marquee direction="right"scrollamount="5"><h5>家书     666</h5></marquee><br>
+<font color="grey">
+<marquee direction="right"scrollamount="7"><h1>家书2                 7777</h1></marquee><br>
+<font color="grey">
+<marquee direction="right"scrollamount="3"><h6> 444          家书3    </h6></marquee><br>   -->
+
+
+            <div class="splide" id="reviews-splide">
+                <div class="splide__track">
+                    <ul class="splide__list">
+                        <!-- 评价1 -->
+                        <li class="splide__slide">
+                            <div class="review-card p-8 rounded-lg shadow-lg mx-4">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                                        <span class="text-red-800 font-bold">李</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">李女士</h4>
+                                        <div class="flex text-yellow-400">
+                                            <span>★★★★★</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 leading-relaxed">
+                                    "看完《家书》后，我深深地被冷少农烈士的精神所感动。这部剧不仅让我们了解了历史，更让我们思考什么是真正的家国情怀。"
+                                </p>
+                            </div>
+                        </li>
+                        
+                        <!-- 评价2 -->
+                        <li class="splide__slide">
+                            <div class="review-card p-8 rounded-lg shadow-lg mx-4">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                                        <span class="text-red-800 font-bold">王</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">王同学</h4>
+                                        <div class="flex text-yellow-400">
+                                            <span>★★★★★</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 leading-relaxed">
+                                    "作为大学生，我从这部剧中感受到了革命先烈对新时代青年的感召力。演员们的表演非常投入，让人身临其境。"
+                                </p>
+                            </div>
+                        </li>
+                        
+                        <!-- 评价3 -->
+                        <li class="splide__slide">
+                            <div class="review-card p-8 rounded-lg shadow-lg mx-4">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mr-4">
+                                        <span class="text-red-800 font-bold">张</span>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-semibold text-gray-900">张先生</h4>
+                                        <div class="flex text-yellow-400">
+                                            <span>★★★★</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="text-gray-700 leading-relaxed">
+                                    "这部剧的制作非常精良，从舞美到演员表演都很出色。特别是家书的朗读部分，让人潸然泪下。强烈推荐！"
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+    </section>
+
+    <!-- 页脚区域 - 版权信息和社交媒体链接 -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h3 class="text-2xl font-bold mb-4" style="font-family: 'Noto Serif SC', serif;">行走的思政课</h3>
+                <p class="text-gray-400 mb-6">中国社会科学院大学首部原创舞台剧《家书》</p>
+                
+                <!-- 社交媒体图标 -->
+                <div class="flex justify-center space-x-2 mb-2">
+                    
+                     <!-- 小红书图标 -->
+                    <a href="https://www.xiaohongshu.com/user/profile/6496d325000000000f005b9d?xsec_token=ABF0qjqyD8WpVgMBKcWQqywHL9bZcQ_zjksS2Os1g7WhM=&xsec_source=pc_note" class="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" class="rounded overflow-hidden"><image width="36px" height="36px" href="data:image/png;base64,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"/></svg>
+                    </a>
+                    
+                    <!-- 微信群图标 -->
+                    <a href="https://3839069.ma3you.cn/html/content_show/index.html?v=20250213&article_id=RPdk2w4#/" class="text-gray-400 hover:text-white transition-colors" target="_blank" rel="noopener noreferrer">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" class="rounded overflow-hidden" viewBox="0 0 590 590"><g fill="none" fill-rule="nonzero"><path fill="#06c160" d="M0 0h590v590H0z"/><g fill="#fff"><path d="M367.5 244.4q-4.8-.4-9.7-.4c-58.4 0-105.8 39.8-105.8 88.8q0 15.2 5.7 28.9-4.8.3-9.7.3c-15.9 0-26.1-2.9-40-7.5q-5.4-1.5-35.4 17.8-2.2 1.1-4.4-.4t-1.2-4.6q8-26.2 4.6-29.2c-28.4-18.5-44.6-45-44.6-77.6 0-56 54.2-101.5 121-101.5 60.3 0 110.3 37 119.5 85.4M208 245a17 17 0 1 0 0-34 17 17 0 0 0 0 34m81 0a17 17 0 1 0 0-34 17 17 0 0 0 0 34"/><path d="M362.3 422a94 94 0 0 0 33.5-6.3q4.5-1.5 29.6 15 1.8.8 3.7-.4t1-3.9q-6.7-22-3.8-24.4c23.8-15.6 37.3-37.8 37.3-65 0-47-45.3-85-101.3-85S261 290 261 337s45.4 85 101.3 85m33.5-98a14.2 14.2 0 1 1 0-28.5 14.2 14.2 0 0 1 0 28.5m-67.8 0a14.2 14.2 0 1 1 0-28.5 14.2 14.2 0 0 1 0 28.5"/></g></g></svg>
+                    </a>
+                </div>
+                
+                <!-- 版权信息 -->
+                <div class="border-t border-gray-800 pt-8">
+                    <p class="text-gray-400 text-sm">&copy; 2025 中国社会科学院大学学生艺术团主题剧队</p>
+                </div>
+            </div>
+       </div>
+    </footer>
+
+    <!-- 返回顶部按钮 - 固定定位，默认隐藏 -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 bg-red-800 hover:bg-red-900 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 pointer-events-none z-50">
+        <!-- pointer-events-none防止点击，opacity-0完全透明 -->
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <!-- 向上箭头图标 -->
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <!-- 主要JavaScript文件引入 - 包含所有交互逻辑 -->
+    <script src="main.js"></script>
+    <script src="https://unpkg.com/tota11y@0.1.1/dist/tota11y.min.js"></script>。
+   
+</body>
+</html>
