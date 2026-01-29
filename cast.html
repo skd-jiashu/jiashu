@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>演员阵容 - 家书剧组</title>
+  
+  <!-- 外部资源库引入 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="main.css">
+</head>
+
+<body class="min-h-screen">
+
+<!-- 导航栏 -->
+<nav class="fixed top-0 w-full bg-white/80 backdrop-blur-xl z-50 border-b border-gray-200/50 shadow-sm">
+    <div class="w-full px-0">
+        <div class="flex justify-between items-center h-16 px-4 lg:px-8">
+            <div class="flex-shrink-0 flex items-center transform hover:scale-105 transition-transform duration-300">
+                <a href="index.html" class="block">
+                    <img src="img/jiashulogo.png" alt="LOGO" class="h-10 w-auto object-contain drop-shadow-sm">
+                </a>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-8 lg:space-x-10">
+                <a href="index.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">首页</a>
+                <a href="schedule.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">演出信息</a>
+                <a href="cast.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">演员阵容</a>
+                <a href="backstage.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">台前幕后</a>
+                <a href="honor.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">获得荣誉</a>
+
+                <div class="relative group">
+                    <a href="know.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 px-1 flex items-center gap-1 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">
+                        走进家书
+                        <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </a>
+                    <div class="absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl shadow-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 border border-gray-100 overflow-hidden">
+                        <div class="p-2 space-y-1">
+                            <a href="story.html" class="flex items-center p-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-transparent transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mr-4 group-hover/item:bg-red-100 transition-colors">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 group-hover/item:text-red-700 transition-colors">故事缘起</div>
+                                    <div class="text-sm text-gray-500 mt-0.5">家书的诞生背景</div>
+                                </div>
+                            </a>
+                            <a href="creation.html" class="flex items-center p-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-transparent transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mr-4 group-hover/item:bg-red-100 transition-colors">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 group-hover/item:text-red-700 transition-colors">创作纪实</div>
+                                    <div class="text-sm text-gray-500 mt-0.5">幕后创作全程记录</div>
+                                </div>
+                            </a>
+                            <a href="director.html" class="flex items-center p-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-transparent transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mr-4 group-hover/item:bg-red-100 transition-colors">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 group-hover/item:text-red-700 transition-colors">导演的话</div>
+                                    <div class="text-sm text-gray-500 mt-0.5">导演创作心声</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <a href="about.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 px-1 flex items-center gap-1 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">
+                        关于我们
+                        <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </a>
+                    <div class="absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl shadow-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 border border-gray-100 overflow-hidden">
+                        <div class="p-2 space-y-1">
+                            <a href="https://book.yunzhan365.com/fdmax/dnif/mobile/index.html " target="_blank" class="flex items-center p-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-transparent transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mr-4 group-hover/item:bg-red-100 transition-colors">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 group-hover/item:text-red-700 transition-colors">剧本</div>
+                                    <div class="text-sm text-gray-500 mt-0.5">编剧 张树辉 李梦辰</div>
+                                </div>
+                            </a>
+                            <a href="https://book.yunzhan365.com/fdmax/wlcl/mobile/index.html " target="_blank" class="flex items-center p-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-transparent transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mr-4 group-hover/item:bg-red-100 transition-colors">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 group-hover/item:text-red-700 transition-colors">画册</div>
+                                    <div class="text-sm text-gray-500 mt-0.5">制作 牟思源</div>
+                                </div>
+                            </a>
+                            <a href="viewport.html" target="_blank" class="flex items-center p-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-transparent transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mr-4 group-hover/item:bg-red-100 transition-colors">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 group-hover/item:text-red-700 transition-colors">剧照</div>
+                                    <div class="text-sm text-gray-500 mt-0.5">舞台场景展示</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:hidden pr-4">
+                <button id="mobile-menu-btn" class="text-gray-600 hover:text-red-700 p-2 rounded-lg hover:bg-gray-100 transition-all duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100 shadow-lg">
+        <div class="px-6 pt-4 pb-6 space-y-2">
+            <a href="index.html" class="block px-4 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50 rounded-xl font-medium transition-all duration-300">首页</a>
+            <a href="cast.html" class="block px-4 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50 rounded-xl font-medium transition-all duration-300">演员阵容</a>
+            <a href="backstage.html" class="block px-4 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50 rounded-xl font-medium transition-all duration-300">台前幕后</a>
+            <a href="schedule.html" class="block px-4 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50 rounded-xl font-medium transition-all duration-300">演出信息</a>
+            <a href="honor.html" class="block px-4 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50 rounded-xl font-medium transition-all duration-300">获得荣誉</a>
+        </div>
+    </div>
+</nav>
+  <!-- ==========================================
+       页面标题区 (Hero Section)
+       ========================================== -->
+  <section class="pt-24 pb-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-6xl mx-auto text-center">
+      <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6 scroll-reveal" style="font-family: 'Noto Serif SC', serif;">演员阵容</h1>
+      <p class="text-xl text-gray-600 max-w-3xl mx-auto scroll-reveal">
+        写故事有多美 走过皆我们
+      </p>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       主演卡片区与详情面板
+       ========================================== -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="flex flex-col lg:flex-row gap-6">
+
+        <!-- 大屏左侧角色选择栏 (垂直排列) -->
+        <div class="hidden lg:block w-16 flex-shrink-0">
+          <div class="sticky top-24 bg-white rounded-lg shadow-lg p-3 space-y-1">
+            <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-3 text-center" style="writing-mode: vertical-rl; text-orientation: upright; margin: 0 auto;">角色</h4>
+            <button class="character-btn w-full text-center px-2 py-2 rounded-md text-xs font-medium transition-all duration-200 hover:bg-red-50 hover:text-red-700 focus:outline-none active" data-character="lengshaonong">冷少农</button>
+            <button class="character-btn w-full text-center px-2 py-2 rounded-md text-xs font-medium transition-all duration-200 hover:bg-red-50 hover:text-red-700 focus:outline-none" data-character="shangxianzhen">商娴真</button>
+            <button class="character-btn w-full text-center px-2 py-2 rounded-md text-xs font-medium transition-all duration-200 hover:bg-red-50 hover:text-red-700 focus:outline-none" data-character="songdehui">宋德惠</button>
+            <button class="character-btn w-full text-center px-2 py-2 rounded-md text-xs font-medium transition-all duration-200 hover:bg-red-50 hover:text-red-700 focus:outline-none" data-character="heyingqin">何应钦</button>
+            <button class="character-btn w-full text-center px-2 py-2 rounded-md text-xs font-medium transition-all duration-200 hover:bg-red-50 hover:text-red-700 focus:outline-none" data-character="yundaiying">恽代英</button>
+            <button class="character-btn w-full text-center px-2 py-2 rounded-md text-xs font-medium transition-all duration-200 hover:bg-red-50 hover:text-red-700 focus:outline-none" data-character="yuanyimei">袁艺梅</button>
+            <button class="character-btn w-full text-center px-2 py-2 rounded-md text-xs font-medium transition-all duration-200 hover:bg-red-50 hover:text-red-700 focus:outline-none" data-character="fangshaowen">方绍闻</button>
+            <button class="character-btn w-full text-center px-2 py-2 rounded-md text-xs font-medium transition-all duration-200 hover:bg-red-50 hover:text-red-700 focus:outline-none" data-character="xuananmeng">徐安萌</button>
+            <button class="character-btn w-full text-center px-2 py-2 rounded-md text-xs font-medium transition-all duration-200 hover:bg-red-50 hover:text-red-700 focus:outline-none" data-character="others">其他</button>
+          </div>
+        </div>
+
+        <!-- 小屏顶部水平滚动角色选择 -->
+        <div class="lg:hidden w-full mb-4">
+          <div class="flex gap-2 overflow-x-auto pb-2 px-2">
+            <button class="character-btn flex-shrink-0 px-3 py-2 rounded-full text-sm border border-red-200 bg-white hover:bg-red-50 active" data-character="lengshaonong">冷少农</button>
+            <button class="character-btn flex-shrink-0 px-3 py-2 rounded-full text-sm border border-red-200 bg-white hover:bg-red-50" data-character="shangxianzhen">商娴真</button>
+            <button class="character-btn flex-shrink-0 px-3 py-2 rounded-full text-sm border border-red-200 bg-white hover:bg-red-50" data-character="songdehui">宋德惠</button>
+            <button class="character-btn flex-shrink-0 px-3 py-2 rounded-full text-sm border border-red-200 bg-white hover:bg-red-50" data-character="heyingqin">何应钦</button>
+            <button class="character-btn flex-shrink-0 px-3 py-2 rounded-full text-sm border border-red-200 bg-white hover:bg-red-50" data-character="yundaiying">恽代英</button>
+            <button class="character-btn flex-shrink-0 px-3 py-2 rounded-full text-sm border border-red-200 bg-white hover:bg-red-50" data-character="yuanyimei">袁艺梅</button>
+            <button class="character-btn flex-shrink-0 px-3 py-2 rounded-full text-sm border border-red-200 bg-white hover:bg-red-50" data-character="fangshaowen">方绍闻</button>
+            <button class="character-btn flex-shrink-0 px-3 py-2 rounded-full text-sm border border-red-200 bg-white hover:bg-red-50" data-character="xuananmeng">徐安萌</button>
+            <button class="character-btn flex-shrink-0 px-3 py-2 rounded-full text-sm border border-red-200 bg-white hover:bg-red-50" data-character="others">其他</button>
+          </div>
+        </div>
+
+        <!-- 中间演员卡片网格 + 右侧详情面板 -->
+        <div class="flex flex-col lg:flex-row gap-6 w-full">
+          <!-- 演员卡片网格 -->
+          <div class="flex-1">
+            <div id="cast-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- 动态生成的演员卡片将渲染于此 -->
+            </div>
+            <div id="empty-state" class="hidden text-center py-20">
+              <p class="text-gray-500 text-lg">请选择左侧角色查看饰演者信息</p>
+            </div>
+          </div>
+
+          <!-- 角色详情面板 (大屏固定右侧，小屏隐藏) -->
+          <div id="detail-wrapper" class="w-full lg:w-1/4 flex-shrink-0 hidden lg:block">
+            <div id="character-info" class="character-info p-6 rounded-lg shadow-lg bg-white">
+              <!-- 默认提示视图 -->
+              <div id="default-info">
+                <h3 class="text-2xl font-bold text-gray-900 mb-4" style="font-family: 'Noto Serif SC', serif;">角色介绍</h3>
+                <p class="text-gray-600 mb-6">点击左侧角色选择饰演者，或点击卡片查看详细信息</p>
+                <div class="bg-red-50 p-6 rounded-lg">
+                  <h4 class="font-semibold text-red-800 mb-2">演员与角色的共鸣</h4>
+                  <p class="text-sm text-red-700">
+                    每一位演员都深入研究了角色的历史背景，力求在表演中体现出角色的精神内核和情感深度。
+                  </p>
+                </div>
+              </div>
+
+              <!-- 动态详情视图 -->
+              <div id="character-details" class="hidden">
+                <div class="flex justify-between items-center mb-4">
+                  <span id="generation-badge" class="inline-block px-3 py-1 bg-red-100 text-red-800 text-xs font-semibold rounded-full"></span>
+                  <button id="close-detail" class="lg:hidden text-gray-400 hover:text-gray-700">✕</button>
+                </div>
+                <div class="mb-6">
+                  <h3 id="character-name" class="text-2xl font-bold text-gray-900 mb-1" style="font-family: 'Noto Serif SC', serif;"></h3>
+                  <p id="actor-name" class="text-lg text-gray-700 font-medium"></p>
+                </div>
+                <div class="mb-6">
+                  <h4 class="font-semibold text-gray-900 mb-3">角色介绍</h4>
+                  <p id="character-description" class="text-gray-700 leading-relaxed text-sm"></p>
+                </div>
+                <div class="quote-card bg-gray-50 p-4 rounded-lg mb-6">
+                  <h4 class="font-semibold text-gray-900 mb-2">演员感言</h4>
+                  <p id="actor-quote" class="text-gray-700 italic leading-relaxed text-sm"></p>
+                </div>
+                <div>
+                  <h4 class="font-semibold text-gray-900 mb-3">演出场次</h4>
+                  <div id="performance-info" class="space-y-2 text-sm text-gray-600"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       角色数据与交互逻辑
+       ========================================== -->
+  <script>
+    // 演员阵容数据 - 按角色分类存储各代演员信息
+    const castData = {
+      lengshaonong: {
+        name: "冷少农",
+        description: "革命烈士，中共地下党员，潜伏在何应钦身边获取重要情报，为革命事业献出年轻生命。",
+        generations: [
+          { gen: "第一代", actor: "刘炳辰", image: "./img/actor/lsn-1.png", quote: "饰演冷少农让我深刻理解了什么是信仰的力量，他在黑暗中坚守光明的勇气令人动容。", performances: ["2023年首演", "待更新"], hasData: true },
+          { gen: "第二代", actor: "郑路", image: "./img/actor/wz.png", quote: "...", performances: ["2024年", "纪念演出5场"], hasData: true },
+          { gen: "第三代", actor: "熊飞", image: "./img/actor/wz.png", quote: "...", performances: ["待更新"], hasData: true },
+          { gen: "第四代", actor: "尹涛", image: "./img/actor/wz.png", quote: "...", performances: ["待更新"], hasData: true },
+          { gen: "第五代", actor: "牟思源", image: "./img/actor/lsn-5.png", quote: "冷少农所拥有的是家人的眷恋与信仰的力量。", performances: ["2025人艺","演出7场"], hasData: true },
+          { gen: "第六代", actor: "罗艺文", image: "./img/actor/wz.png", quote: "...", performances: ["2025新疆和田"], hasData: true }
+        ]
+      },
+      shangxianzhen: {
+        name: "商娴贞",
+        description: "冷少农的妻子，坚韧而深情的革命伴侣，独自抚养孩子，守候丈夫的归来。",
+        generations: [
+          { gen: "第一代", actor: "郑璐旻", image: "./img/actor/sxz-1.png", quote: "商娴真的等待让我看到了爱情最深沉的模样，那种坚守跨越生死。", performances: ["第二代总导演","2023年首演", "待更新"], hasData: true },
+          { gen: "第二代", actor: "李佳真", image: "./img/actor/sxz-2.png", quote: "...", performances: ["2025人艺"], hasData: true },
+          { gen: "第三代", actor: "李", image: "./img/actor/wz.png", quote: "...", performances: ["待更新"], hasData: false }
+        ]
+      },
+      songdehui: {
+        name: "宋德惠",
+        description: "冷少农的母亲，深明大义的革命母亲，虽不知儿子真实身份，却默默支持他的选择。",
+        generations: [
+          { gen: "第一代", actor: "张沛欣", image: "./img/actor/sdh-1.png", quote: "母亲的角色让我体会到了家国情怀的重量，那种隐忍与坚强令人敬佩。", performances: ["2023年首演", "全国巡演12场"], hasData: true },
+          { gen: "第二代", actor: "牛雨欣", image: "./img/actor/wz.png", quote: "...", performances: ["待更新"], hasData: true },
+          { gen: "第三代", actor: "张康柔", image: "./img/actor/sdh-3.png", quote: "...", performances: ["2025人艺"], hasData: true }
+        ]
+      },
+      heyingqin: {
+        name: "何应钦",
+        description: "国民党高级将领，冷少农的上级，冷少农潜伏期间的重要情报来源对象。",
+        generations: [
+          { gen: "第一代", actor: "待更新", image: "./img/actor/hyq-1.png", quote: "复杂的历史人物需要更立体的诠释，不能简单脸谱化。", performances: ["2023年首演", "全国巡演12场"], hasData: true },
+          { gen: "第二代", actor: "待更新", image: "./img/actor/wz.png", quote: "...", performances: ["待更新"], hasData: true },
+          { gen: "第三代", actor: "待更新", image: "./img/actor/hyq-3.png", quote: "既是何长官，也是何老师。", performances: ["2025人艺"], hasData: true }
+        ]
+      },
+      yundaiying: {
+        name: "恽代英",
+        description: "中国共产党早期青年运动领导人，冷少农的革命引路人。",
+        generations: [
+          { gen: "第一代", actor: "孟宇昆", image: "./img/actor/wz.png", quote: "青年领袖的热血与理想至今令人动容，那种激情跨越百年依然鲜活。", performances: ["2023年首演", "全国巡演12场"], hasData: true },
+          { gen: "第二代", actor: "计翔耀", image: "./img/actor/ydy-2.png", quote: "...", performances: ["2025人艺"], hasData: true },
+          { gen: "第三代", actor: "待更新", image: "./img/actor/wz.png", quote: "...", performances: ["待更新"], hasData: false }
+        ]
+      },
+      yuanyimei: {
+        name: "袁艺梅",
+        description: "方绍闻的母亲，传统而善良的女性，见证了那个时代的变迁。",
+        generations: [
+          { gen: "第一代", actor: "待更新", image: "./img/actor/zc-1.png", quote: "传统母亲的形象有着独特的力量，那种柔韧让人动容。", performances: ["2023年首演", "全国巡演12场"], hasData: true },
+          { gen: "第二代", actor: "王傲然", image: "./img/actor/yym-2.png", quote: "...", performances: ["待更新"], hasData: true },
+          { gen: "第三代", actor: "待更新", image: "./img/actor/wz.png", quote: "...", performances: ["待更新"], hasData: false }
+        ]
+      },
+      fangshaowen: {
+        name: "方绍闻",
+        description: "进步青年，冷少农的战友，一同投身革命洪流的热血青年。",
+        generations: [
+          { gen: "第一代", actor: "郑路", image: "./img/actor/fsw-1.png", quote: "青年的觉醒是那个时代最美的风景，能饰演这样的角色是我的荣幸。", performances: ["2023年首演", "全国巡演12场"], hasData: true },
+          { gen: "第二代", actor: "张辰源", image: "./img/actor/fsw-2.png", quote: "...", performances: ["待更新"], hasData: true },
+          { gen: "第三代", actor: "牟思源", image: "./img/actor/wz.png", quote: "...", performances: ["2025新疆和田"], hasData: true }
+        ]
+      },
+      xuananmeng: {
+        name: "徐安萌",
+        description: "热血青年，投身革命洪流，与方绍闻一同成长的革命同志。",
+        generations: [
+          { gen: "第一代", actor: "黎映池", image: "./img/actor/xam-1.png", quote: "青春与理想的碰撞让我深受触动，那是一代人的选择。", performances: ["2023年首演", "全国巡演12场"], hasData: true },
+          { gen: "第二代", actor: "赵晚同", image: "./img/actor/xam-2.png", quote: "...", performances: ["待更新"], hasData: true },
+          { gen: "第三代", actor: "宋明蔚", image: "./img/actor/wz.png", quote: "...", performances: ["待更新"], hasData: true },
+          { gen: "第四代", actor: "卢祉卉", image: "./img/actor/wz.png", quote: "...", performances: ["待更新"], hasData: true }
+        ]
+      },
+      others: {
+          name: "其他角色",
+          description: "剧中的其他重要角色，共同构成那个时代的群像。",
+          generations: [
+            { 
+              gen: "第一代", 
+              actor: "待更新",      // 饰演者姓名
+              role: "赵一曼",       // 具体角色名
+              image: "./img/actor/wz.png", 
+              quote: "每一个角色都是历史的一部分，哪怕只有一句台词也要全力以赴。", 
+              performances: ["2023年首演", "校园巡演"], 
+              hasData: true 
+            },
+            { 
+              gen: "第二代", 
+              actor: "郑璐旻", 
+              role: "赵一曼", 
+              image: "./img/actor/zym-2.png", 
+              quote: "...", 
+              performances: ["待更新"], 
+              hasData: true 
+            },
+            { 
+              gen: "第一代", 
+              actor: "桑梓蕊", 
+              role: "小田", 
+              image: "./img/actor/wz.png", 
+              quote: "...", 
+              performances: ["待更新"], 
+              hasData: true 
+            },
+            { 
+              gen: "第二代", 
+              actor: "待更新", 
+              role: "小田", 
+              image: "./img/actor/xt-2.jpg", 
+              quote: "...", 
+              performances: ["待更新"], 
+              hasData: true 
+            }
+          ]
+      }
+    };
+
+    // 状态管理
+    let currentCharacter = null;
+    let currentGeneration = null;
+
+    // 初始化角色选择与渲染逻辑
+    document.addEventListener('DOMContentLoaded', function() {
+      // 默认加载冷少农角色
+      loadCharacter('lengshaonong');
+      
+      // 绑定角色切换按钮事件
+      document.querySelectorAll('.character-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+          const charId = this.dataset.character;
+          if (charId === currentCharacter) return;
+          
+          // 更新按钮激活状态
+          document.querySelectorAll('.character-btn').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          
+          loadCharacter(charId);
+        });
+      });
+
+      // 移动端关闭详情面板
+      document.getElementById('close-detail')?.addEventListener('click', () => {
+        document.getElementById('detail-wrapper').classList.add('hidden');
+        document.querySelectorAll('.cast-card').forEach(c => c.classList.remove('selected'));
+      });
+    });
+
+    /**
+     * 加载指定角色的演员卡片
+     * @param {string} charId - 角色数据键名
+     */
+    function loadCharacter(charId) {
+      currentCharacter = charId;
+      const data = castData[charId];
+      const grid = document.getElementById('cast-grid');
+      grid.innerHTML = '';
+      
+      // 使用文档片段批量创建卡片以优化性能
+      const fragment = document.createDocumentFragment();
+      
+      data.generations.forEach((gen, i) => {
+        const card = document.createElement('div');
+        card.className = 'cast-card' + (gen.hasData ? '' : ' empty');
+        card.dataset.index = i;
+        card.dataset.generation = gen.gen;
+        
+        if (gen.hasData) {
+          card.addEventListener('click', () => selectGeneration(i));
+        }
+
+        // 世代标签
+        const badge = document.createElement('div');
+        badge.className = gen.hasData ? 'generation-badge' : 'generation-badge empty-badge';
+        badge.textContent = gen.gen;
+        card.appendChild(badge);
+
+        // 演员照片
+        const img = document.createElement('img');
+        img.src = gen.image;
+        img.alt = data.name;
+        img.className = gen.hasData ? 'card-image' : 'card-image grayscale';
+        img.onerror = () => { img.src = 'img/actor/wz.png'; img.onerror = null; };
+        card.appendChild(img);
+
+        // 卡片内容区
+        const content = document.createElement('div');
+        content.className = 'card-content';
+        
+        // 演员名（使用标题样式）
+        const actor = document.createElement('h3');
+        actor.className = 'card-title';
+        actor.textContent = gen.actor + ' 饰';
+        content.appendChild(actor);
+
+        // 角色名（使用副标题样式）
+        const title = document.createElement('p');
+        title.className = gen.hasData ? 'card-actor has-data' : 'card-actor no-data';
+        
+        // 其他角色显示具体细分角色名（如"赵一曼"、"小田"），主要角色显示总角色名（如"冷少农"）
+        if (charId === 'others') {
+          title.textContent = gen.role;
+        } else {
+          title.textContent = data.name;
+        }
+        content.appendChild(title);
+        
+        card.appendChild(content);
+        fragment.appendChild(card);
+      });
+      
+      grid.appendChild(fragment);
+      
+      // 触发重绘以应用动画
+      grid.style.display = 'none';
+      grid.offsetHeight;
+      grid.style.display = 'grid';
+      
+      // 重置详情面板
+      document.getElementById('default-info').classList.remove('hidden');
+      document.getElementById('character-details').classList.add('hidden');
+      currentGeneration = null;
+    }
+
+    /**
+     * 选择特定代际演员并展示详情
+     * @param {number} index - 代际数组索引
+     */
+    function selectGeneration(index) {
+      if (!currentCharacter) return;
+      
+      const data = castData[currentCharacter];
+      const gen = data.generations[index];
+      if (!gen.hasData) return;
+      
+      currentGeneration = index;
+      
+      // 高亮选中卡片
+      document.querySelectorAll('.cast-card').forEach((card, i) => {
+        card.classList.toggle('selected', i === index);
+      });
+
+      // 切换详情视图
+      const defaultInfo = document.getElementById('default-info');
+      const details = document.getElementById('character-details');
+      defaultInfo.classList.add('hidden');
+      details.classList.remove('hidden');
+
+      // 填充详情数据
+      document.getElementById('generation-badge').textContent = gen.gen;
+
+      // 其他角色显示具体角色名，主要角色保持原样
+      if (currentCharacter === 'others') {
+          document.getElementById('character-name').textContent = gen.role || gen.actor;
+        } else {
+          document.getElementById('character-name').textContent = data.name;
+        }
+
+        document.getElementById('actor-name').textContent = gen.actor + ' 饰';
+        document.getElementById('character-description').textContent = data.description;
+        document.getElementById('actor-quote').textContent = '"' + gen.quote + '"';
+        
+      // 渲染演出场次列表
+      const perfEl = document.getElementById('performance-info');
+      perfEl.innerHTML = '';
+      gen.performances.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-2';
+        div.innerHTML = '<span class="w-2 h-2 bg-red-500 rounded-full"></span><span>' + p + '</span>';
+        perfEl.appendChild(div);
+      });
+
+      // 移动端显示详情面板并滚动到可视区域
+      if (window.innerWidth < 1024) {
+        document.getElementById('detail-wrapper').classList.remove('hidden');
+        document.getElementById('detail-wrapper').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  </script>
+
+  <!-- ==========================================
+       样式定义区块
+       ========================================== -->
+  <style>
+    /* 角色选择按钮基础样式 */
+    .character-btn {
+      color: #4b5563;
+      background-color: transparent;
+      border: 1px solid transparent;
+      letter-spacing: 0.05em;
+    }
+    
+    .character-btn:hover {
+      background-color: #fef2f2;
+      color: #b91c1c;
+    }
+    
+    .character-btn.active {
+      background-color: #b91c1c;
+      color: white;
+      border-color: #991b1b;
+    }
+
+    /* 演员卡片组件 */
+    .cast-card {
+      position: relative;
+      background-color: rgb(255, 255, 255);
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      display: block;
+      width: 100%;
+    }
+    
+    .cast-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    }
+    
+    .cast-card.selected {
+      box-shadow: 0 0 0 2px #dc2626;
+      border: 2px solid #991b1b;
+    }
+    
+    .cast-card.empty {
+      opacity: 0.6;
+      cursor: default;
+      background-color: rgb(243, 244, 246);
+    }
+    
+    .cast-card.empty:hover {
+      transform: none;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 世代标签徽章 */
+    .generation-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background-color: rgba(185, 28, 28, 1);
+      color: white;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      z-index: 10;
+      pointer-events: none;
+    }
+    
+    .empty-badge {
+      background-color: rgba(156, 163, 175, 0.9);
+    }
+
+    /* 卡片图片处理 */
+    .card-image {
+      width: 100%;
+      height: 16rem;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .card-image.grayscale {
+      filter: grayscale(100%);
+    }
+
+    /* 卡片内容文本 */
+    .card-content {
+      padding: 1rem;
+    }
+    
+    .card-title {
+      font-weight: 700;
+      font-size: 1.125rem;
+      color: rgb(17, 24, 39);
+      margin: 0 0 0.25rem 0;
+    }
+    
+    .card-actor {
+      font-size: 0.875rem;
+      margin: 0;
+    }
+    
+    .card-actor.has-data {
+      color: rgb(75, 85, 99);
+    }
+    
+    .card-actor.no-data {
+      color: rgb(156, 163, 175);
+    }
+  </style>
+
+  
+<!-- 页脚 - 美化版（使用自定义SVG） -->
+<footer class="relative bg-gradient-to-b from-gray-900 via-gray-900 to-black text-white overflow-hidden">
+  <!-- 装饰性背景文字 -->
+  <div class="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none">
+    <span class="text-[20rem] font-bold" style="font-family:'Noto Serif SC',serif;">家书</span>
+  </div>
+  
+  <!-- 顶部红色分隔线 -->
+  <div class="w-full h-1 bg-gradient-to-r from-transparent via-red-800 to-transparent"></div>
+  
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+      
+      <!-- 品牌介绍区 -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="flex items-center space-x-3">
+          <div class="w-1 h-8 bg-red-700 rounded-full"></div>
+          <h3 class="text-2xl font-bold tracking-wider" style="font-family:'Noto Serif SC',serif;">行走的思政课</h3>
+        </div>
+        <p class="text-gray-400 leading-relaxed max-w-md text-sm">
+          中国社会科学院大学首部原创舞台剧《家书》，以"因为一封信，而去寻找一个人"为主线，讲述百年来两代青年人在历史回响中相逢，在彼此照亮中完成精神接力的动人故事。
+        </p>
+        <div class="flex items-center space-x-2 text-red-400 text-sm italic" style="font-family:'Noto Serif SC',serif;">
+          <span class="w-8 h-px bg-red-800/50"></span>
+          <span>山川会记得，日月会记得，我们会记得</span>
+        </div>
+      </div>
+
+      <!-- 快速导航 -->
+      <div class="space-y-6">
+        <h4 class="text-lg font-semibold text-gray-200 border-b border-gray-800 pb-2 inline-block">快速导航</h4>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a href="index.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              首页
+            </a>
+          </li>
+          <li>
+            <a href="schedule.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              演出信息
+            </a>
+          </li>
+          <li>
+            <a href="cast.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              演员阵容
+            </a>
+          </li>
+          <li>
+            <a href="backstage.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              台前幕后
+            </a>
+          </li>
+          <li>
+            <a href="honor.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              获得荣誉
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 联系方式与社交 -->
+      <div class="space-y-6">
+        <h4 class="text-lg font-semibold text-gray-200 border-b border-gray-800 pb-2 inline-block">关注我们</h4>
+        <p class="text-gray-500 text-sm">获取最新演出动态与幕后故事</p>
+        
+        <div class="flex space-x-4">
+          <!-- 小红书（保持原样） -->
+          <a href="https://www.xiaohongshu.com/user/profile/6496d325000000000f005b9d" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-red-600 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-red-600/30 group"
+             target="_blank" rel="noopener noreferrer" aria-label="小红书">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="rounded overflow-hidden opacity-80 group-hover:opacity-100">
+              <image width="20" height="20" href="data:image/png;base64,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"/>
+            </svg>
+          </a>
+          
+          <!-- 微信（基于你提供的SVG） -->
+          <a href="https://3839069.ma3you.cn/html/content_show/index.html?v=20250213&article_id=RPdk2w4#/" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-[#07C160] flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-[#07C160]/30 group"
+             target="_blank" rel="noopener noreferrer" aria-label="微信公众号">
+            <svg viewBox="0 0 2499.7 2024.2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" class="opacity-80 group-hover:opacity-100">
+              <path d="m2499.7 1313.8c0-347.3-335.9-630.6-749.5-630.6s-747.2 283.3-747.2 630.6 335.9 630.6 749.5 630.6c80 0 155.4-9.1 226.2-29.7 20.6-4.6 43.4-2.3 64 6.9l185.1 100.5c11.4 6.9 27.4-4.6 22.8-18.3l-36.6-148.5c-4.6-22.8 2.3-45.7 22.8-59.4 160.1-116.5 262.9-287.9 262.9-482.1zm-1016.8-82.2c-57.1 0-102.8-45.7-102.8-102.8s45.7-102.8 102.8-102.8 102.8 45.7 102.8 102.8-45.7 102.8-102.8 102.8zm505 0c-57.1 0-102.8-45.7-102.8-102.8s45.7-102.8 102.8-102.8 102.8 45.7 102.8 102.8-48 102.8-102.8 102.8z" fill="white"/>
+              <path d="m941.4 1316.1c0-386.1 365.6-699.2 818-699.2h34.3c-73.2-349.6-443.3-616.9-888.9-616.9-500.4 0-904.8 333.6-904.8 747.2 0 228.5 125.7 434.1 322.2 571.2 13.7 9.1 18.3 25.1 16 41.1l-68.5 242.2c-4.6 16 13.7 32 29.7 22.8l267.3-159.9c18.3-11.4 38.8-13.7 59.4-6.9 89.1 22.8 182.8 36.6 278.8 36.6 20.6 0 41.1 0 64-2.3-18.4-57.1-27.5-116.5-27.5-175.9zm267.3-920.8c66.3 0 121.1 54.8 121.1 121.1s-54.8 121.1-121.1 121.1-121.1-54.8-121.1-121.1 54.9-121.1 121.1-121.1zm-607.8 242.2c-66.3 0-121.1-54.8-121.1-121.1s54.8-121.1 121.1-121.1 121.1 54.8 121.1 121.1-52.5 121.1-121.1 121.1z" fill="white"/>
+            </svg>
+          </a>
+
+            <!-- Bilibili（已修复） -->
+          <a href="https://space.bilibili.com/667615559" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-pink-400 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-pink-400/30"
+             target="_blank" rel="noopener noreferrer" aria-label="Bilibili">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z" fill="white"/>
+            </svg>
+          </a>
+
+          <!-- 微博（基于你提供的SVG，改为白色填充） -->
+          <a href="https://weibo.com" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-[#FFC125] flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-[#E6162D]/30 group"
+             target="_blank" rel="noopener noreferrer" aria-label="微博">
+            <svg viewBox="0 0 50.497 40.648" width="20" height="16" xmlns="http://www.w3.org/2000/svg" class="opacity-80 group-hover:opacity-100">
+              <path d="M50.448 12.132c.217 2.814-.259 6.186-2.117 6.351-3.033.271-1.451-3.07-1.411-5.081.111-5.829-4.865-9.879-9.739-9.879-1.381 0-4.588.936-4.094-1.976.222-1.284 1.31-1.266 2.399-1.411 8.197-1.093 14.386 4.546 14.962 11.996z" fill="white"/>
+              <path d="M37.04 18.907c3.524 1.928 7.758 2.888 7.056 8.61-.168 1.371-.998 3.203-1.834 4.373-5.957 8.339-23.924 11.844-35.144 5.506C3.355 35.269-.539 32.159.062 25.962c.517-5.333 4.103-9.464 7.622-12.983 3.357-3.359 6.897-5.987 11.714-7.198 5.226-1.314 6.771 3.043 5.363 7.339 3.027-.203 9.442-3.582 12.279-.282 1.25 1.454.771 4.058 0 6.069zm-3.811 13.548c1.129-1.28 2.264-3.231 2.257-5.503-.015-7.014-8.851-9.605-15.806-9.033-3.804.312-6.363 1.115-9.033 2.682-2.179 1.279-4.729 3.36-5.363 6.491-1.427 7.041 6.231 10.35 11.855 10.726 6.498.437 13.002-1.857 16.09-5.363z" fill="white"/>
+              <path d="M43.531 12.132c.296 2.149-.319 4.011-1.552 4.093-2.056.137-1.287-1.408-1.412-3.246-.078-1.132-1.016-2.439-1.835-2.823-1.606-.752-4.093.548-4.093-1.693 0-1.664 1.443-1.491 2.259-1.553 3.574-.272 6.216 2.191 6.633 5.222z" fill="white"/>
+              <path d="M27.019 26.246c3.007 9.088-12.66 13.314-15.525 5.504-1.917-5.223 2.686-9.377 7.48-9.879 4.093-.429 7.144 1.658 8.045 4.375zm-7.198 1.553c.638 1.104 2.105.311 1.976-.564-.154-1.013-1.989-.863-1.976.564zm-2.541 4.799c2.634-.627 2.988-5.588-.988-4.658-3.34.78-2.694 5.533.988 4.658z" fill="white"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部分隔线与版权 -->
+    <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+      <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-sm text-gray-500">
+        <span>&copy; 2025 中国社会科学院大学学生艺术团主题剧队</span>
+        <span class="hidden md:inline text-gray-700">|</span>
+        <span>制作：牟思源</span>
+      </div>
+      <div class="flex items-center space-x-4 text-xs text-gray-600">
+        <a href="#" class="hover:text-gray-400 transition-colors">隐私政策</a>
+        <span class="text-gray-700">•</span>
+        <a href="#" class="hover:text-gray-400 transition-colors">使用条款</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <!-- ==========================================
+       回到顶部按钮
+       ========================================== -->
+  <button id="back-to-top" class="fixed bottom-8 right-8 bg-red-800 hover:bg-red-900 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 pointer-events-none z-50" aria-label="回到顶部">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
+  </button>
+
+  <!-- 页面初始化脚本 -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      initScrollReveal();
+      initMobileMenu();
+      initBackToTop();
+      initBehindScenesCarousel();
+    });
+
+    // 滚动揭示动画初始化
+    function initScrollReveal() {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('revealed');
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+      
+      document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+    }
+
+    // 移动端菜单切换
+    function initMobileMenu() {
+      const btn = document.getElementById('mobile-menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      if (btn && menu) {
+        btn.addEventListener('click', () => menu.classList.toggle('hidden'));
+      }
+    }
+
+    // 回到顶部功能
+    function initBackToTop() {
+      const btn = document.getElementById('back-to-top');
+      window.addEventListener('scroll', () => {
+        btn.classList.toggle('opacity-0', window.pageYOffset <= 300);
+        btn.classList.toggle('pointer-events-none', window.pageYOffset <= 300);
+      });
+      btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    }
+
+    // 幕后花絮轮播初始化
+    function initBehindScenesCarousel() {
+      if (document.getElementById('behind-scenes-splide')) {
+        new Splide('#behind-scenes-splide', {
+          type: 'loop',
+          autoplay: true,
+          interval: 4000,
+          arrows: true,
+          pagination: true,
+          perPage: 3,
+          gap: '2rem',
+          breakpoints: {
+            1024: { perPage: 2 },
+            768: { perPage: 1 }
+          }
+        }).mount();
+      }
+    }
+  </script>
+  
+  <!-- 引入主逻辑脚本 -->
+  <script src="main.js"></script>
+</body>
+</html>

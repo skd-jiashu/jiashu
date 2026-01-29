@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>走进家书 - 创作纪实</title>
+  
+  <!-- 外部资源库引入 -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.18.0/matter.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="main.css">
+  <script src="https://kit.fontawesome.com/1edc433974.js" crossorigin="anonymous"></script>
+  
+  <style>
+    /* ===========================================
+       全局滚动条样式
+       =========================================== */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #3A000B;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #E2D9B7;
+      border-radius: 4px;
+    }
+    
+    /* ===========================================
+       页面加载动画类
+       =========================================== */
+    .loading {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease-out;
+    }
+    
+    .loaded {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* ===========================================
+       视频卡片交互效果
+       =========================================== */
+    .video-card {
+      transition: all 0.3s ease;
+    }
+    
+    .video-card:hover {
+      transform: translateY(-5px);
+    }
+    
+    .video-card:hover .play-icon {
+      transform: scale(1.1);
+    }
+    
+    /* ===========================================
+       章节标签样式
+       =========================================== */
+    .chapter-tag {
+      background: linear-gradient(135deg, #8B0000 0%, #3A000B 100%);
+      color: #E2D9B7;
+    }
+    
+    /* ===========================================
+       响应式适配
+       =========================================== */
+    @media (max-width: 640px) {
+      .responsive-text {
+        font-size: 1.5rem !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="min-h-screen" style="background-color: #3A000B;">
+
+  <!-- ==========================================
+       页面标题区 (Hero Section)
+       ========================================== -->
+  <section class="pt-24 pb-12 px-4 sm:px-6 lg:px-8" style="background-color: #3A000B;">
+    <div class="max-w-6xl mx-auto text-center">
+      <h1 class="text-5xl md:text-6xl font-bold mb-6 loading responsive-text" style="font-family: 'Noto Serif SC', serif; color: #E2D9B7;">
+        创作纪实
+      </h1>
+      <p class="text-xl max-w-3xl mx-auto loading" style="color: #E2D9B7;">
+        台前幕后，全景呈现一部舞台作品的诞生与回响
+      </p>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       纪录片系列展示区域
+       ========================================== -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8" style="background-color: #3A000B;">
+    <div class="max-w-7xl mx-auto">
+      
+      <!-- 系列标题介绍 -->
+      <div class="text-center mb-16 loading">
+        <h2 class="text-4xl md:text-5xl font-bold mb-6" style="font-family: 'Noto Serif SC', serif; color: #E2D9B7;">
+          《家书·山川日月》
+        </h2>
+        <p class="text-lg max-w-3xl mx-auto" style="color: #E2D9B7;">
+          共5集，持续更新中，敬请期待！
+        </p>
+      </div>
+
+      <!-- 视频章节网格布局 -->
+      <div class="grid gap-8 md:gap-12">
+        
+        <!-- 第一章：托举·点燃那道光 -->
+        <div class="video-card bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10 loading">
+          <div class="flex flex-col lg:flex-row gap-6 md:gap-8">
+            <!-- 视频嵌入区域 -->
+            <div class="lg:w-1/3">
+              <div class="relative group cursor-pointer" onclick="playVideo('chapter1')">
+                <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                  <iframe 
+                    id="chapter1"
+                    src="//player.bilibili.com/player.html?isOutside=true&aid=115906671808590&bvid=BV1nBryB8ECu&cid=35431908010&p=1" 
+                    scrolling="no" 
+                    border="0" 
+                    frameborder="no" 
+                    framespacing="0" 
+                    allowfullscreen="true"
+                    class="w-full h-full">
+                  </iframe>
+                </div>
+                <!-- 播放按钮遮罩 -->
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                  <div class="play-icon w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 章节文字介绍 -->
+            <div class="lg:w-2/3">
+              <div class="chapter-tag inline-block px-4 py-2 rounded-full text-sm font-medium mb-4">第一章</div>
+              <h3 class="text-2xl md:text-3xl font-bold mb-4" style="font-family: 'Noto Serif SC', serif; color: #E2D9B7;">
+                托举·点燃那道光
+              </h3>
+              <p class="text-gray-300 leading-relaxed mb-6">
+                聚焦幕后（舞美、灯光、音效、服化道），拍摄他们如何从无到有构建舞台空间，如何为一件道具、一件衣服、一道光线反复琢磨。每一个看似简单的舞台效果背后，都凝聚着无数匠人的心血与智慧。
+              </p>
+              <!-- 标签组 -->
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">舞美设计</span>
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">灯光音效</span>
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">服化道具</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第二章：淬炼·信使养成记 -->
+        <div class="video-card bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10 loading">
+          <div class="flex flex-col lg:flex-row-reverse gap-6 md:gap-8">
+            <div class="lg:w-1/3">
+              <div class="relative group cursor-pointer" onclick="playVideo('chapter2')">
+                <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                  <iframe 
+                    id="chapter2"
+                    src="//player.bilibili.com/player.html?isOutside=true&aid=115906671808590&bvid=BV1nBryB8ECu&cid=35431908010&p=1" 
+                    scrolling="no" 
+                    border="0" 
+                    frameborder="no" 
+                    framespacing="0" 
+                    allowfullscreen="true"
+                    class="w-full h-full">
+                  </iframe>
+                </div>
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                  <div class="play-icon w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="lg:w-2/3">
+              <div class="chapter-tag inline-block px-4 py-2 rounded-full text-sm font-medium mb-4">第二章</div>
+              <h3 class="text-2xl md:text-3xl font-bold mb-4" style="font-family: 'Noto Serif SC', serif; color: #E2D9B7;">
+                淬炼·信使养成记
+              </h3>
+              <p class="text-gray-300 leading-relaxed mb-6">
+                跟踪演员排练。从剧本围读、形体训练到角色打磨，突出"养成"的艰辛与突破。见证他们如何在导演的指导下，一步步将文字转化为有血有肉的角色，如何在反复排练中寻找最真实、最动人的表演状态。
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">演员训练</span>
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">角色塑造</span>
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">排练日常</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第三章：绽放·当灯光亮起 -->
+        <div class="video-card bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10 loading">
+          <div class="flex flex-col lg:flex-row gap-6 md:gap-8">
+            <div class="lg:w-1/3">
+              <div class="relative group cursor-pointer" onclick="playVideo('chapter3')">
+                <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                  <iframe 
+                    id="chapter3"
+                    src="//player.bilibili.com/player.html?isOutside=true&aid=115906671808590&bvid=BV1nBryB8ECu&cid=35431908010&p=1" 
+                    scrolling="no" 
+                    border="0" 
+                    frameborder="no" 
+                    framespacing="0" 
+                    allowfullscreen="true"
+                    class="w-full h-full">
+                  </iframe>
+                </div>
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                  <div class="play-icon w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="lg:w-2/3">
+              <div class="chapter-tag inline-block px-4 py-2 rounded-full text-sm font-medium mb-4">第三章</div>
+              <h3 class="text-2xl md:text-3xl font-bold mb-4" style="font-family: 'Noto Serif SC', serif; color: #E2D9B7;">
+                绽放·当灯光亮起
+              </h3>
+              <p class="text-gray-300 leading-relaxed mb-6">
+                呈现彩排与正式演出的片段。不追求完整剧目，而捕捉演员与角色合一的巅峰时刻、幕后人员的紧张协同、以及观众即时的情感反馈。这是所有努力最终绽放的时刻，每一个瞬间都值得被永远珍藏。
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">正式演出</span>
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">观众反响</span>
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">精彩瞬间</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第四章：相知·肩担未竟志 -->
+        <div class="video-card bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10 loading">
+          <div class="flex flex-col lg:flex-row-reverse gap-6 md:gap-8">
+            <div class="lg:w-1/3">
+              <div class="relative group cursor-pointer" onclick="playVideo('chapter4')">
+                <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                  <iframe 
+                    id="chapter4"
+                    src="//player.bilibili.com/player.html?isOutside=true&aid=115906671808590&bvid=BV1nBryB8ECu&cid=35431908010&p=1" 
+                    scrolling="no" 
+                    border="0" 
+                    frameborder="no" 
+                    framespacing="0" 
+                    allowfullscreen="true"
+                    class="w-full h-full">
+                  </iframe>
+                </div>
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                  <div class="play-icon w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="lg:w-2/3">
+              <div class="chapter-tag inline-block px-4 py-2 rounded-full text-sm font-medium mb-4">第四章</div>
+              <h3 class="text-2xl md:text-3xl font-bold mb-4" style="font-family: 'Noto Serif SC', serif; color: #E2D9B7;">
+                相知·肩担未竟志
+              </h3>
+              <p class="text-gray-300 leading-relaxed mb-6">
+                深入演员及主创的内心世界。通过访谈、排练间隙的沉思，探讨他们与自己扮演的历史人物产生的深层共鸣。他们理解了怎样的"未竟之志"？这如何影响了他们的现实认知？这是一次跨越时空的精神对话。
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">深度访谈</span>
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">内心感悟</span>
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">精神共鸣</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 第五章：共振·继笔续山河 -->
+        <div class="video-card bg-white/5 backdrop-blur-sm rounded-2xl p-6 md:p-8 border border-white/10 loading">
+          <div class="flex flex-col lg:flex-row gap-6 md:gap-8">
+            <div class="lg:w-1/3">
+              <div class="relative group cursor-pointer" onclick="playVideo('chapter5')">
+                <div class="aspect-video bg-gray-800 rounded-lg overflow-hidden">
+                  <iframe 
+                    id="chapter5"
+                    src="//player.bilibili.com/player.html?isOutside=true&aid=115906671808590&bvid=BV1nBryB8ECu&cid=35431908010&p=1" 
+                    scrolling="no" 
+                    border="0" 
+                    frameborder="no" 
+                    framespacing="0" 
+                    allowfullscreen="true"
+                    class="w-full h-full">
+                  </iframe>
+                </div>
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-all duration-300 flex items-center justify-center">
+                  <div class="play-icon w-16 h-16 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center transition-transform duration-300">
+                    <svg class="w-8 h-8 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="lg:w-2/3">
+              <div class="chapter-tag inline-block px-4 py-2 rounded-full text-sm font-medium mb-4">第五章</div>
+              <h3 class="text-2xl md:text-3xl font-bold mb-4" style="font-family: 'Noto Serif SC', serif; color: #E2D9B7;">
+                共振·继笔续山河
+              </h3>
+              <p class="text-gray-300 leading-relaxed mb-6">
+                超越舞台。记录演出结束后，主创团队走进社区、学校的实践活动，探讨这场艺术实践如何像涟漪一样，将精神力量传递出去，完成"继笔"的使命。艺术的影响不会随着谢幕而结束，它会在观众心中继续生长。
+              </p>
+              <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">社区互动</span>
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">精神传承</span>
+                <span class="px-3 py-1 bg-red-800/30 text-red-200 rounded-full text-sm">社会影响</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 观看提示信息 -->
+      <div class="text-center mt-16 loading">
+        <div class="inline-flex items-center px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full border border-white/20">
+          <svg class="w-5 h-5 text-yellow-400 mr-3" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+          </svg>
+          <span class="text-gray-300">建议按顺序观看，感受完整的创作历程</span>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+<!-- 页脚 - 美化版（使用自定义SVG） -->
+<footer class="relative bg-gradient-to-b from-gray-900 via-gray-900 to-black text-white overflow-hidden">
+  <!-- 装饰性背景文字 -->
+  <div class="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none">
+    <span class="text-[20rem] font-bold" style="font-family:'Noto Serif SC',serif;">家书</span>
+  </div>
+  
+  <!-- 顶部红色分隔线 -->
+  <div class="w-full h-1 bg-gradient-to-r from-transparent via-red-800 to-transparent"></div>
+  
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+      
+      <!-- 品牌介绍区 -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="flex items-center space-x-3">
+          <div class="w-1 h-8 bg-red-700 rounded-full"></div>
+          <h3 class="text-2xl font-bold tracking-wider" style="font-family:'Noto Serif SC',serif;">行走的思政课</h3>
+        </div>
+        <p class="text-gray-400 leading-relaxed max-w-md text-sm">
+          中国社会科学院大学首部原创舞台剧《家书》，以"因为一封信，而去寻找一个人"为主线，讲述百年来两代青年人在历史回响中相逢，在彼此照亮中完成精神接力的动人故事。
+        </p>
+        <div class="flex items-center space-x-2 text-red-400 text-sm italic" style="font-family:'Noto Serif SC',serif;">
+          <span class="w-8 h-px bg-red-800/50"></span>
+          <span>山川会记得，日月会记得，我们会记得</span>
+        </div>
+      </div>
+
+      <!-- 快速导航 -->
+      <div class="space-y-6">
+        <h4 class="text-lg font-semibold text-gray-200 border-b border-gray-800 pb-2 inline-block">快速导航</h4>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a href="index.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              首页
+            </a>
+          </li>
+          <li>
+            <a href="schedule.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              演出信息
+            </a>
+          </li>
+          <li>
+            <a href="cast.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              演员阵容
+            </a>
+          </li>
+          <li>
+            <a href="backstage.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              台前幕后
+            </a>
+          </li>
+          <li>
+            <a href="honor.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              获得荣誉
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 联系方式与社交 -->
+      <div class="space-y-6">
+        <h4 class="text-lg font-semibold text-gray-200 border-b border-gray-800 pb-2 inline-block">关注我们</h4>
+        <p class="text-gray-500 text-sm">获取最新演出动态与幕后故事</p>
+        
+        <div class="flex space-x-4">
+          <!-- 小红书（保持原样） -->
+          <a href="https://www.xiaohongshu.com/user/profile/6496d325000000000f005b9d" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-red-600 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-red-600/30 group"
+             target="_blank" rel="noopener noreferrer" aria-label="小红书">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="rounded overflow-hidden opacity-80 group-hover:opacity-100">
+              <image width="20" height="20" href="data:image/png;base64,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"/>
+            </svg>
+          </a>
+          
+          <!-- 微信（基于你提供的SVG） -->
+          <a href="https://3839069.ma3you.cn/html/content_show/index.html?v=20250213&article_id=RPdk2w4#/" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-[#07C160] flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-[#07C160]/30 group"
+             target="_blank" rel="noopener noreferrer" aria-label="微信公众号">
+            <svg viewBox="0 0 2499.7 2024.2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" class="opacity-80 group-hover:opacity-100">
+              <path d="m2499.7 1313.8c0-347.3-335.9-630.6-749.5-630.6s-747.2 283.3-747.2 630.6 335.9 630.6 749.5 630.6c80 0 155.4-9.1 226.2-29.7 20.6-4.6 43.4-2.3 64 6.9l185.1 100.5c11.4 6.9 27.4-4.6 22.8-18.3l-36.6-148.5c-4.6-22.8 2.3-45.7 22.8-59.4 160.1-116.5 262.9-287.9 262.9-482.1zm-1016.8-82.2c-57.1 0-102.8-45.7-102.8-102.8s45.7-102.8 102.8-102.8 102.8 45.7 102.8 102.8-45.7 102.8-102.8 102.8zm505 0c-57.1 0-102.8-45.7-102.8-102.8s45.7-102.8 102.8-102.8 102.8 45.7 102.8 102.8-48 102.8-102.8 102.8z" fill="white"/>
+              <path d="m941.4 1316.1c0-386.1 365.6-699.2 818-699.2h34.3c-73.2-349.6-443.3-616.9-888.9-616.9-500.4 0-904.8 333.6-904.8 747.2 0 228.5 125.7 434.1 322.2 571.2 13.7 9.1 18.3 25.1 16 41.1l-68.5 242.2c-4.6 16 13.7 32 29.7 22.8l267.3-159.9c18.3-11.4 38.8-13.7 59.4-6.9 89.1 22.8 182.8 36.6 278.8 36.6 20.6 0 41.1 0 64-2.3-18.4-57.1-27.5-116.5-27.5-175.9zm267.3-920.8c66.3 0 121.1 54.8 121.1 121.1s-54.8 121.1-121.1 121.1-121.1-54.8-121.1-121.1 54.9-121.1 121.1-121.1zm-607.8 242.2c-66.3 0-121.1-54.8-121.1-121.1s54.8-121.1 121.1-121.1 121.1 54.8 121.1 121.1-52.5 121.1-121.1 121.1z" fill="white"/>
+            </svg>
+          </a>
+
+            <!-- Bilibili（已修复） -->
+          <a href="https://space.bilibili.com/667615559" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-pink-400 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-pink-400/30"
+             target="_blank" rel="noopener noreferrer" aria-label="Bilibili">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z" fill="white"/>
+            </svg>
+          </a>
+
+          <!-- 微博（基于你提供的SVG，改为白色填充） -->
+          <a href="https://weibo.com" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-[#FFC125] flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-[#E6162D]/30 group"
+             target="_blank" rel="noopener noreferrer" aria-label="微博">
+            <svg viewBox="0 0 50.497 40.648" width="20" height="16" xmlns="http://www.w3.org/2000/svg" class="opacity-80 group-hover:opacity-100">
+              <path d="M50.448 12.132c.217 2.814-.259 6.186-2.117 6.351-3.033.271-1.451-3.07-1.411-5.081.111-5.829-4.865-9.879-9.739-9.879-1.381 0-4.588.936-4.094-1.976.222-1.284 1.31-1.266 2.399-1.411 8.197-1.093 14.386 4.546 14.962 11.996z" fill="white"/>
+              <path d="M37.04 18.907c3.524 1.928 7.758 2.888 7.056 8.61-.168 1.371-.998 3.203-1.834 4.373-5.957 8.339-23.924 11.844-35.144 5.506C3.355 35.269-.539 32.159.062 25.962c.517-5.333 4.103-9.464 7.622-12.983 3.357-3.359 6.897-5.987 11.714-7.198 5.226-1.314 6.771 3.043 5.363 7.339 3.027-.203 9.442-3.582 12.279-.282 1.25 1.454.771 4.058 0 6.069zm-3.811 13.548c1.129-1.28 2.264-3.231 2.257-5.503-.015-7.014-8.851-9.605-15.806-9.033-3.804.312-6.363 1.115-9.033 2.682-2.179 1.279-4.729 3.36-5.363 6.491-1.427 7.041 6.231 10.35 11.855 10.726 6.498.437 13.002-1.857 16.09-5.363z" fill="white"/>
+              <path d="M43.531 12.132c.296 2.149-.319 4.011-1.552 4.093-2.056.137-1.287-1.408-1.412-3.246-.078-1.132-1.016-2.439-1.835-2.823-1.606-.752-4.093.548-4.093-1.693 0-1.664 1.443-1.491 2.259-1.553 3.574-.272 6.216 2.191 6.633 5.222z" fill="white"/>
+              <path d="M27.019 26.246c3.007 9.088-12.66 13.314-15.525 5.504-1.917-5.223 2.686-9.377 7.48-9.879 4.093-.429 7.144 1.658 8.045 4.375zm-7.198 1.553c.638 1.104 2.105.311 1.976-.564-.154-1.013-1.989-.863-1.976.564zm-2.541 4.799c2.634-.627 2.988-5.588-.988-4.658-3.34.78-2.694 5.533.988 4.658z" fill="white"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部分隔线与版权 -->
+    <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+      <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-sm text-gray-500">
+        <span>&copy; 2025 中国社会科学院大学学生艺术团主题剧队</span>
+        <span class="hidden md:inline text-gray-700">|</span>
+        <span>制作：牟思源</span>
+      </div>
+      <div class="flex items-center space-x-4 text-xs text-gray-600">
+        <a href="#" class="hover:text-gray-400 transition-colors">隐私政策</a>
+        <span class="text-gray-700">•</span>
+        <a href="#" class="hover:text-gray-400 transition-colors">使用条款</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  <!-- ==========================================
+       回到顶部按钮
+       ========================================== -->
+  <button id="back-to-top" class="fixed bottom-8 right-8 bg-red-800 hover:bg-red-900 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 pointer-events-none z-50" aria-label="回到顶部">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
+  </button>
+
+  <script>
+    /* ==========================================
+       移动端菜单交互逻辑
+       ========================================== */
+    document.querySelectorAll('.know-mobile button, .about-mobile button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const content = btn.nextElementSibling;
+        const arrow = btn.querySelector('svg');
+        content.classList.toggle('hidden');
+        arrow.classList.toggle('rotate-180');
+      });
+    });
+
+    /* ==========================================
+       回到顶部功能实现
+       ========================================== */
+    const backToTopBtn = document.getElementById('back-to-top');
+    
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
+      } else {
+        backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
+      }
+    });
+    
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    /* ==========================================
+       视频播放控制函数
+       ========================================== */
+    function playVideo(chapterId) {
+      const iframe = document.getElementById(chapterId);
+      console.log(`播放 ${chapterId}`);
+      // 此处可扩展统计播放次数等逻辑
+    }
+
+    /* ==========================================
+       滚动渐入动画初始化 (Intersection Observer)
+       ========================================== */
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('loaded');
+        }
+      });
+    }, observerOptions);
+
+    // 观察所有带有.loading类的元素
+    document.querySelectorAll('.loading').forEach(el => {
+      observer.observe(el);
+    });
+
+    /* ==========================================
+       页面加载淡入效果
+       ========================================== */
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.5s ease-in-out';
+    
+    window.addEventListener('load', () => {
+      document.body.style.opacity = '1';
+    });
+  </script>
+</body>
+</html>

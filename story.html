@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>故事缘起</title>
+  
+  <style>
+    /* ===========================================
+       基础重置与全局样式
+       =========================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      background-color: #3A000B;
+      font-family: 'Noto Serif SC', serif;
+      color: #E2D9B7;
+      line-height: 1.8;
+      overflow-x: hidden;
+    }
+    
+    /* 页面背景装饰光效 */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(circle at 20% 80%, rgba(226, 217, 183, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(226, 217, 183, 0.03) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    /* ===========================================
+       布局容器
+       =========================================== */
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      background: radial-gradient(ellipse at center, rgba(58, 0, 11, 0.9) 0%, rgba(26, 0, 5, 0.95) 100%);
+    }
+    
+    /* ===========================================
+       页面标题区
+       =========================================== */
+    .doc-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 2rem;
+      letter-spacing: 0.1em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 1.2s ease-out;
+    }
+    
+    /* ===========================================
+       视频嵌入区域
+       =========================================== */
+    .video-wrapper {
+      width: 100%;
+      max-width: 1000px;
+      margin-bottom: 4rem;
+      animation: fadeIn 1.5s ease-out;
+    }
+    
+    /* 16:9比例视频容器 */
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%;
+      overflow: hidden;
+    }
+    
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    /* ===========================================
+       故事正文区域
+       =========================================== */
+    .story-section {
+      max-width: 800px;
+      text-align: center;
+      animation: slideUp 1.8s ease-out;
+    }
+    
+    .story-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 3rem;
+      letter-spacing: 0.1em;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+    
+    /* 标题下划线装饰 */
+    .story-title::after {
+      content: '';
+      position: absolute;
+      bottom: -1rem;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #E2D9B7, transparent);
+    }
+    
+    /* 故事段落样式 */
+    .story-paragraph {
+      font-size: 1.2rem;
+      line-height: 2;
+      margin-bottom: 2.5rem;
+      text-align: justify;
+      text-indent: 2em;
+      opacity: 0.95;
+      position: relative;
+      padding: 0 1rem;
+    }
+    
+    /* 段落左侧装饰符号 */
+    .story-paragraph::before {
+      content: '❧';
+      position: absolute;
+      left: -2rem;
+      top: 0.5rem;
+      font-size: 1.5rem;
+      opacity: 0.6;
+      color: #E2D9B7;
+    }
+    
+    /* ===========================================
+       CSS动画定义
+       =========================================== */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    /* ===========================================
+       响应式适配 (移动端)
+       =========================================== */
+    @media (max-width: 768px) {
+      .doc-title {
+        font-size: 2rem;
+      }
+      
+      .story-title {
+        font-size: 2.2rem;
+      }
+      
+      .story-paragraph {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 2rem;
+      }
+      
+      .video-wrapper {
+        margin-bottom: 3rem;
+      }
+      
+      .container {
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <!-- 纪录片标题 -->
+    <h2 class="doc-title">《寻访红色特工》纪录片</h2>
+    
+    <!-- B站视频嵌入 -->
+    <div class="video-wrapper">
+      <div class="video-container">
+        <iframe src="//player.bilibili.com/player.html?isOutside=true&aid=115906671808590&bvid=BV1nBryB8ECu&cid=35431908010&p=1" 
+                scrolling="no" 
+                border="0" 
+                frameborder="no" 
+                framespacing="0" 
+                allowfullscreen="true">
+        </iframe>
+      </div>
+    </div>
+    
+    <!-- 故事正文区域 -->
+    <div class="story-section">
+      <h1 class="story-title">故事缘起</h1>
+      
+      <p class="story-paragraph">
+        在浩瀚的历史长河中，有些故事如同被岁月尘封的珍珠，静静躺在时光的深处，等待着有缘人将其重新拾起。我们的故事，便始于这样一次偶然的相遇——当泛黄的家书从旧木箱中轻轻滑落，当褪色的字迹重新映入眼帘，那些被遗忘的往事便如潮水般涌来。
+      </p>
+      
+      <p class="story-paragraph">
+        山川异域，风月同天。在那个人心动荡的年代，有多少游子背井离乡，有多少思念跨越千山万水。一封封家书，承载着游子的乡愁，承载着亲人的牵挂，更承载着那个时代特有的家国情怀。字里行间，我们读到的不仅是个人命运的沉浮，更是一个民族的集体记忆。
+      </p>
+      
+      <p class="story-paragraph">
+        而今，我们试图用现代的艺术语言，重新诠释这段跨越时空的情感。不是为了怀旧，而是为了让今天的我们，能够在喧嚣的都市生活中，重新感受到那份最纯粹的人间真情。因为有些情感，永远不会过时；有些故事，值得被永远传颂。
+      </p>
+      
+      <p class="story-paragraph">
+        这不仅仅是一部舞台作品的诞生记，更是一次心灵的朝圣之旅。从剧本的创作到舞台的呈现，从演员的排练到观众的共鸣，每一个环节都凝聚着无数人的心血与情感。我们希望通过这个纪实系列，让您看到的不仅是舞台上的光鲜亮丽，更是幕后那些动人的故事与瞬间。
+      </p>
+    </div>
+  </div>
+    <!-- 页脚 - 美化版（使用自定义SVG） -->
+<footer class="relative bg-gradient-to-b from-gray-900 via-gray-900 to-black text-white overflow-hidden">
+  <!-- 装饰性背景文字 -->
+  <div class="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none">
+    <span class="text-[20rem] font-bold" style="font-family:'Noto Serif SC',serif;">家书</span>
+  </div>
+  
+  <!-- 顶部红色分隔线 -->
+  <div class="w-full h-1 bg-gradient-to-r from-transparent via-red-800 to-transparent"></div>
+  
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+      
+      <!-- 品牌介绍区 -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="flex items-center space-x-3">
+          <div class="w-1 h-8 bg-red-700 rounded-full"></div>
+          <h3 class="text-2xl font-bold tracking-wider" style="font-family:'Noto Serif SC',serif;">行走的思政课</h3>
+        </div>
+        <p class="text-gray-400 leading-relaxed max-w-md text-sm">
+          中国社会科学院大学首部原创舞台剧《家书》，以"因为一封信，而去寻找一个人"为主线，讲述百年来两代青年人在历史回响中相逢，在彼此照亮中完成精神接力的动人故事。
+        </p>
+        <div class="flex items-center space-x-2 text-red-400 text-sm italic" style="font-family:'Noto Serif SC',serif;">
+          <span class="w-8 h-px bg-red-800/50"></span>
+          <span>山川会记得，日月会记得，我们会记得</span>
+        </div>
+      </div>
+
+      <!-- 快速导航 -->
+      <div class="space-y-6">
+        <h4 class="text-lg font-semibold text-gray-200 border-b border-gray-800 pb-2 inline-block">快速导航</h4>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a href="index.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              首页
+            </a>
+          </li>
+          <li>
+            <a href="schedule.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              演出信息
+            </a>
+          </li>
+          <li>
+            <a href="cast.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              演员阵容
+            </a>
+          </li>
+          <li>
+            <a href="backstage.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              台前幕后
+            </a>
+          </li>
+          <li>
+            <a href="honor.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              获得荣誉
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 联系方式与社交 -->
+      <div class="space-y-6">
+        <h4 class="text-lg font-semibold text-gray-200 border-b border-gray-800 pb-2 inline-block">关注我们</h4>
+        <p class="text-gray-500 text-sm">获取最新演出动态与幕后故事</p>
+        
+        <div class="flex space-x-4">
+          <!-- 小红书（保持原样） -->
+          <a href="https://www.xiaohongshu.com/user/profile/6496d325000000000f005b9d" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-red-600 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-red-600/30 group"
+             target="_blank" rel="noopener noreferrer" aria-label="小红书">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="rounded overflow-hidden opacity-80 group-hover:opacity-100">
+              <image width="20" height="20" href="data:image/png;base64,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"/>
+            </svg>
+          </a>
+          
+          <!-- 微信（基于你提供的SVG） -->
+          <a href="https://3839069.ma3you.cn/html/content_show/index.html?v=20250213&article_id=RPdk2w4#/" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-[#07C160] flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-[#07C160]/30 group"
+             target="_blank" rel="noopener noreferrer" aria-label="微信公众号">
+            <svg viewBox="0 0 2499.7 2024.2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" class="opacity-80 group-hover:opacity-100">
+              <path d="m2499.7 1313.8c0-347.3-335.9-630.6-749.5-630.6s-747.2 283.3-747.2 630.6 335.9 630.6 749.5 630.6c80 0 155.4-9.1 226.2-29.7 20.6-4.6 43.4-2.3 64 6.9l185.1 100.5c11.4 6.9 27.4-4.6 22.8-18.3l-36.6-148.5c-4.6-22.8 2.3-45.7 22.8-59.4 160.1-116.5 262.9-287.9 262.9-482.1zm-1016.8-82.2c-57.1 0-102.8-45.7-102.8-102.8s45.7-102.8 102.8-102.8 102.8 45.7 102.8 102.8-45.7 102.8-102.8 102.8zm505 0c-57.1 0-102.8-45.7-102.8-102.8s45.7-102.8 102.8-102.8 102.8 45.7 102.8 102.8-48 102.8-102.8 102.8z" fill="white"/>
+              <path d="m941.4 1316.1c0-386.1 365.6-699.2 818-699.2h34.3c-73.2-349.6-443.3-616.9-888.9-616.9-500.4 0-904.8 333.6-904.8 747.2 0 228.5 125.7 434.1 322.2 571.2 13.7 9.1 18.3 25.1 16 41.1l-68.5 242.2c-4.6 16 13.7 32 29.7 22.8l267.3-159.9c18.3-11.4 38.8-13.7 59.4-6.9 89.1 22.8 182.8 36.6 278.8 36.6 20.6 0 41.1 0 64-2.3-18.4-57.1-27.5-116.5-27.5-175.9zm267.3-920.8c66.3 0 121.1 54.8 121.1 121.1s-54.8 121.1-121.1 121.1-121.1-54.8-121.1-121.1 54.9-121.1 121.1-121.1zm-607.8 242.2c-66.3 0-121.1-54.8-121.1-121.1s54.8-121.1 121.1-121.1 121.1 54.8 121.1 121.1-52.5 121.1-121.1 121.1z" fill="white"/>
+            </svg>
+          </a>
+
+            <!-- Bilibili（已修复） -->
+          <a href="https://space.bilibili.com/667615559" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-pink-400 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-pink-400/30"
+             target="_blank" rel="noopener noreferrer" aria-label="Bilibili">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z" fill="white"/>
+            </svg>
+          </a>
+
+          <!-- 微博（基于你提供的SVG，改为白色填充） -->
+          <a href="https://weibo.com" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-[#FFC125] flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-[#E6162D]/30 group"
+             target="_blank" rel="noopener noreferrer" aria-label="微博">
+            <svg viewBox="0 0 50.497 40.648" width="20" height="16" xmlns="http://www.w3.org/2000/svg" class="opacity-80 group-hover:opacity-100">
+              <path d="M50.448 12.132c.217 2.814-.259 6.186-2.117 6.351-3.033.271-1.451-3.07-1.411-5.081.111-5.829-4.865-9.879-9.739-9.879-1.381 0-4.588.936-4.094-1.976.222-1.284 1.31-1.266 2.399-1.411 8.197-1.093 14.386 4.546 14.962 11.996z" fill="white"/>
+              <path d="M37.04 18.907c3.524 1.928 7.758 2.888 7.056 8.61-.168 1.371-.998 3.203-1.834 4.373-5.957 8.339-23.924 11.844-35.144 5.506C3.355 35.269-.539 32.159.062 25.962c.517-5.333 4.103-9.464 7.622-12.983 3.357-3.359 6.897-5.987 11.714-7.198 5.226-1.314 6.771 3.043 5.363 7.339 3.027-.203 9.442-3.582 12.279-.282 1.25 1.454.771 4.058 0 6.069zm-3.811 13.548c1.129-1.28 2.264-3.231 2.257-5.503-.015-7.014-8.851-9.605-15.806-9.033-3.804.312-6.363 1.115-9.033 2.682-2.179 1.279-4.729 3.36-5.363 6.491-1.427 7.041 6.231 10.35 11.855 10.726 6.498.437 13.002-1.857 16.09-5.363z" fill="white"/>
+              <path d="M43.531 12.132c.296 2.149-.319 4.011-1.552 4.093-2.056.137-1.287-1.408-1.412-3.246-.078-1.132-1.016-2.439-1.835-2.823-1.606-.752-4.093.548-4.093-1.693 0-1.664 1.443-1.491 2.259-1.553 3.574-.272 6.216 2.191 6.633 5.222z" fill="white"/>
+              <path d="M27.019 26.246c3.007 9.088-12.66 13.314-15.525 5.504-1.917-5.223 2.686-9.377 7.48-9.879 4.093-.429 7.144 1.658 8.045 4.375zm-7.198 1.553c.638 1.104 2.105.311 1.976-.564-.154-1.013-1.989-.863-1.976.564zm-2.541 4.799c2.634-.627 2.988-5.588-.988-4.658-3.34.78-2.694 5.533.988 4.658z" fill="white"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部分隔线与版权 -->
+    <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+      <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-sm text-gray-500">
+        <span>&copy; 2025 中国社会科学院大学学生艺术团主题剧队</span>
+        <span class="hidden md:inline text-gray-700">|</span>
+        <span>制作：牟思源</span>
+      </div>
+      <div class="flex items-center space-x-4 text-xs text-gray-600">
+        <a href="#" class="hover:text-gray-400 transition-colors">隐私政策</a>
+        <span class="text-gray-700">•</span>
+        <a href="#" class="hover:text-gray-400 transition-colors">使用条款</a>
+      </div>
+    </div>
+  </div>
+</footer>
+      <!-- 返回顶部 -->
+  <button id="back-to-top" class="fixed bottom-8 right-8 bg-red-800 hover:bg-red-900 text-white p-3 rounded-full shadow-lg transition-all duration-300 opacity-0 pointer-events-none z-50" aria-label="返回顶部">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+    </svg>
+  </button>
+</body>
+</html>

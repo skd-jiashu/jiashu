@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>关于我们 - 家书剧组</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background-color: #fafaf9;
+        }
+        h1, h2, h3, .serif {
+            font-family: 'Noto Serif SC', serif;
+        }
+        
+        /* 滚动显示动画 */
+        .scroll-reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .scroll-reveal.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* 三幕剧场样式 */
+        .theater-card {
+            background: linear-gradient(to bottom, #1c1917 0%, #292524 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .theater-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" opacity="0.03"><rect fill="none" stroke="white" stroke-width="2" x="0" y="0" width="100" height="100"/></svg>');
+            pointer-events: none;
+        }
+        .spotlight {
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+        }
+        
+        /* 选项按钮样式 */
+        .choice-btn {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+        }
+        .choice-btn:hover {
+            transform: translateY(-2px);
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+        }
+        .choice-btn.selected {
+            background: rgba(185, 28, 28, 0.8);
+            border-color: rgba(185, 28, 28, 1);
+            transform: scale(1.02);
+        }
+
+        /* 角色结果卡片 */
+        .soul-card {
+            background: linear-gradient(135deg, #fef2f2 0%, #fff5eb 100%);
+            box-shadow: 0 20px 60px -20px rgba(185, 28, 28, 0.2);
+        }
+
+        /* 文本发光效果 */
+        .glow-text {
+            text-shadow: 0 0 40px rgba(255,255,255,0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+<!-- 导航栏 -->
+<nav class="fixed top-0 w-full bg-white/80 backdrop-blur-xl z-50 border-b border-gray-200/50 shadow-sm">
+    <div class="w-full px-0">
+        <div class="flex justify-between items-center h-16 px-4 lg:px-8">
+            <div class="flex-shrink-0 flex items-center transform hover:scale-105 transition-transform duration-300">
+                <a href="index.html" class="block">
+                    <img src="img/jiashulogo.png" alt="LOGO" class="h-10 w-auto object-contain drop-shadow-sm">
+                </a>
+            </div>
+
+            <div class="hidden md:flex items-center space-x-8 lg:space-x-10">
+                <a href="index.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">首页</a>
+                <a href="schedule.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">演出信息</a>
+                <a href="cast.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">演员阵容</a>
+                <a href="backstage.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">台前幕后</a>
+                <a href="honor.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">获得荣誉</a>
+
+                <div class="relative group">
+                    <a href="know.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 px-1 flex items-center gap-1 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">
+                        走进家书
+                        <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </a>
+                    <div class="absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl shadow-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 border border-gray-100 overflow-hidden">
+                        <div class="p-2 space-y-1">
+                            <a href="story.html" class="flex items-center p-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-transparent transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mr-4 group-hover/item:bg-red-100 transition-colors">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 group-hover/item:text-red-700 transition-colors">故事缘起</div>
+                                    <div class="text-sm text-gray-500 mt-0.5">家书的诞生背景</div>
+                                </div>
+                            </a>
+                            <a href="creation.html" class="flex items-center p-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-transparent transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mr-4 group-hover/item:bg-red-100 transition-colors">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 group-hover/item:text-red-700 transition-colors">创作纪实</div>
+                                    <div class="text-sm text-gray-500 mt-0.5">幕后创作全程记录</div>
+                                </div>
+                            </a>
+                            <a href="director.html" class="flex items-center p-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-transparent transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mr-4 group-hover/item:bg-red-100 transition-colors">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 group-hover/item:text-red-700 transition-colors">导演的话</div>
+                                    <div class="text-sm text-gray-500 mt-0.5">导演创作心声</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="relative group">
+                    <a href="about.html" class="nav-link relative text-gray-600 hover:text-red-700 font-medium transition-colors duration-300 py-2 px-1 flex items-center gap-1 after:content-[''] after:absolute after:bottom-0 after:left-1/2 after:-translate-x-1/2 after:w-0 after:h-0.5 after:bg-red-700 after:transition-all after:duration-300 hover:after:w-full">
+                        关于我们
+                        <svg class="w-4 h-4 transition-transform duration-300 group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </a>
+                    <div class="absolute top-full right-0 mt-2 w-72 bg-white/95 backdrop-blur-xl rounded-2xl shadow-xl shadow-gray-200/50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-500 transform translate-y-4 group-hover:translate-y-0 border border-gray-100 overflow-hidden">
+                        <div class="p-2 space-y-1">
+                            <a href="https://book.yunzhan365.com/fdmax/dnif/mobile/index.html " target="_blank" class="flex items-center p-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-transparent transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mr-4 group-hover/item:bg-red-100 transition-colors">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 group-hover/item:text-red-700 transition-colors">剧本</div>
+                                    <div class="text-sm text-gray-500 mt-0.5">编剧 张树辉 李梦辰</div>
+                                </div>
+                            </a>
+                            <a href="https://book.yunzhan365.com/fdmax/wlcl/mobile/index.html " target="_blank" class="flex items-center p-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-transparent transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mr-4 group-hover/item:bg-red-100 transition-colors">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 group-hover/item:text-red-700 transition-colors">画册</div>
+                                    <div class="text-sm text-gray-500 mt-0.5">制作 牟思源</div>
+                                </div>
+                            </a>
+                            <a href="viewport.html" target="_blank" class="flex items-center p-4 rounded-xl hover:bg-gradient-to-r hover:from-red-50 hover:to-transparent transition-all duration-300 group/item">
+                                <div class="w-10 h-10 rounded-full bg-red-50 flex items-center justify-center mr-4 group-hover/item:bg-red-100 transition-colors">
+                                    <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <div class="font-semibold text-gray-800 group-hover/item:text-red-700 transition-colors">剧照</div>
+                                    <div class="text-sm text-gray-500 mt-0.5">舞台场景展示</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="md:hidden pr-4">
+                <button id="mobile-menu-btn" class="text-gray-600 hover:text-red-700 p-2 rounded-lg hover:bg-gray-100 transition-all duration-300">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="mobile-menu" class="hidden md:hidden bg-white/95 backdrop-blur-xl border-t border-gray-100 shadow-lg">
+        <div class="px-6 pt-4 pb-6 space-y-2">
+            <a href="index.html" class="block px-4 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50 rounded-xl font-medium transition-all duration-300">首页</a>
+            <a href="cast.html" class="block px-4 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50 rounded-xl font-medium transition-all duration-300">演员阵容</a>
+            <a href="backstage.html" class="block px-4 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50 rounded-xl font-medium transition-all duration-300">台前幕后</a>
+            <a href="schedule.html" class="block px-4 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50 rounded-xl font-medium transition-all duration-300">演出信息</a>
+            <a href="honor.html" class="block px-4 py-3 text-gray-600 hover:text-red-700 hover:bg-red-50 rounded-xl font-medium transition-all duration-300">获得荣誉</a>
+        </div>
+    </div>
+</nav>
+    
+    <!-- Hero区域 -->
+    <section class="pt-24 pb-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-stone-50">
+        <div class="max-w-6xl mx-auto text-center">
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-900 mb-6 scroll-reveal serif">关于我们</h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto scroll-reveal">
+                传承红色基因，讲好中国故事，用艺术的力量传递信仰的光芒
+            </p>
+        </div>
+    </section>
+
+    <!-- 使命区域 -->
+    <section class="py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="scroll-reveal">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 serif">我们的使命</h2>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-6">
+                        《家书》剧组成立于2021年，由中国社会科学院大学师生共同创建。我们致力于通过舞台剧的形式，传承红色基因，讲好中国故事，让革命先烈的精神在新时代继续发光发热。
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed mb-8">
+                        我们相信，艺术不仅是娱乐，更是教育的重要载体。通过《家书》这部作品，我们希望观众能够感受到革命先烈的家国情怀，思考个人理想与国家命运的关系。
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <span class="bg-red-100 text-red-800 px-4 py-2 rounded-full font-medium">传承红色基因</span>
+                        <span class="bg-red-100 text-red-800 px-4 py-2 rounded-full font-medium">讲好中国故事</span>
+                        <span class="bg-red-100 text-red-800 px-4 py-2 rounded-full font-medium">艺术育人</span>
+                        <span class="bg-red-100 text-red-800 px-4 py-2 rounded-full font-medium">文化创新</span>
+                    </div>
+                </div>
+                <div class="scroll-reveal">
+                    <img src="img/homepage%20honor/hezhao-1.jpg" alt="剧组合影" class="w-full rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 历程区域 -->
+    <section class="py-20 bg-gradient-to-br from-red-50 to-orange-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 serif">创作历程</h2>
+                <p class="text-xl text-gray-600">去更远的地方 逐更高的浪</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto space-y-8">
+                <div class="timeline-item scroll-reveal bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-red-100 text-red-800 text-sm font-medium px-4 py-1 rounded-full">2021年</span>
+                        <h3 class="text-xl font-bold text-gray-900 ml-4">项目启动</h3>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed">
+                        中国社会科学院大学师生奔赴贵州瓮安走访冷少农故居，开始创作过程。确定以"红色家书"为核心线索，创新加入民国时空与现代时空相交错的情节。
+                    </p>
+                </div>
+                
+                <div class="timeline-item scroll-reveal bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-yellow-100 text-yellow-800 text-sm font-medium px-4 py-1 rounded-full">2023年</span>
+                        <h3 class="text-xl font-bold text-gray-900 ml-4">首演成功</h3>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed">
+                        5月5日，《家书》正式首演，受到师生热烈反响。迄今已演出16场，观众超过15000人次，成为社科大"行走的思政课"名片。
+                    </p>
+                </div>
+                
+                <div class="timeline-item scroll-reveal bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-green-100 text-green-800 text-sm font-medium px-4 py-1 rounded-full">2024年</span>
+                        <h3 class="text-xl font-bold text-gray-900 ml-4">全国巡演</h3>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed">
+                        剧组开始在贵州瓮安、贵阳、中国人民革命军事博物馆、中央团校、对外经济贸易大学等地演出，收获各地观众高度评价。
+                    </p>
+                </div>
+                
+                <div class="timeline-item scroll-reveal bg-white rounded-lg shadow-lg p-8 hover:shadow-xl transition-shadow">
+                    <div class="flex items-center mb-4">
+                        <span class="bg-blue-100 text-blue-800 text-sm font-medium px-4 py-1 rounded-full">2025年</span>
+                        <h3 class="text-xl font-bold text-gray-900 ml-4">人艺舞台</h3>
+                    </div>
+                    <p class="text-gray-700 leading-relaxed">
+                        8月24日，《家书》登上北京人民艺术剧院舞台，参加"青春绽放·戏聚京津冀——大学生戏剧展演活动"，获得专业认可。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队区域 -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 serif">主创团队</h2>
+                <p class="text-xl text-gray-600">写故事有多美 走过皆我们</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="team-card bg-white rounded-lg shadow-lg p-8 text-center scroll-reveal hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <img src="img/actor/zsh.png" alt="张树辉" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover ring-4 ring-red-100">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">张树辉</h3>
+                    <p class="text-red-800 font-medium mb-3">编剧 & 总策划</p>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        中国社会科学院大学党委常委、副校长，《家书》的创始人和总策划。带领团队深入研究历史，确保剧目的历史真实性和艺术感染力。
+                    </p>
+                </div>
+                
+                <div class="team-card bg-white rounded-lg shadow-lg p-8 text-center scroll-reveal hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <img src="img/actor/lmc.png" alt="李梦辰" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover ring-4 ring-red-100">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">李梦辰</h3>
+                    <p class="text-red-800 font-medium mb-3">编剧 & 导演</p>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        中国社会科学院大学马克思主义学院博士生，负责剧本创作和导演工作。将历史真实与艺术创新完美结合，打造跨时空的对话结构。
+                    </p>
+                </div>
+                
+                <div class="team-card bg-white rounded-lg shadow-lg p-8 text-center scroll-reveal hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                    <img src="img/actor/zlm.png" alt="郑璐旻" class="w-24 h-24 rounded-full mx-auto mb-4 object-cover ring-4 ring-red-100">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">郑璐旻</h3>
+                    <p class="text-red-800 font-medium mb-3">总导演 & 演员</p>
+                    <p class="text-sm text-gray-600 leading-relaxed">
+                        中国社会科学院大学2022级汉语言文学专业本科生，担任总导演并饰演商娴贞。从"小白"成长为优秀的导演和演员。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 三幕入戏 - 沉浸式角色共鸣（替代原情感测试） -->
+    <section class="py-20 bg-stone-900 text-white relative overflow-hidden">
+        <!-- 背景装饰 -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.4\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')]"></div>
+        </div>
+
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 serif tracking-wide">三幕入戏 · 灵魂共鸣</h2>
+                <p class="text-xl text-stone-400 mb-2">不是表演，而是成为</p>
+                <p class="text-sm text-stone-500">基于《家书》剧本关键情节的体验式互动</p>
+            </div>
+
+            <!-- 互动区域容器 -->
+            <div id="theater-container" class="scroll-reveal">
+                
+                <!-- 开始界面 -->
+                <div id="act-start" class="text-center py-16">
+                    <div class="w-24 h-24 bg-red-900/30 rounded-full flex items-center justify-center mx-auto mb-8 ring-2 ring-red-800/50 ring-offset-4 ring-offset-stone-900">
+                        <svg class="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-2xl md:text-3xl font-bold mb-6 serif">踏入排练厅</h3>
+                    <p class="text-stone-300 max-w-2xl mx-auto mb-10 leading-relaxed">
+                        现在，你是方绍闻。徐安萌导演要求你在一周内"成为"冷少农。<br>
+                        没有选择题，只有三个关键时刻的抉择。<br>
+                        你的选择，将揭示你与哪位角色灵魂最相契。
+                    </p>
+                    <button onclick="startTheater()" class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-medium text-white bg-red-900 rounded-full overflow-hidden transition-all duration-300 hover:bg-red-800 hover:shadow-lg hover:shadow-red-900/50">
+                        <span class="relative z-10">开启入戏之旅</span>
+                        <div class="absolute inset-0 h-full w-full scale-0 rounded-full transition-all duration-300 group-hover:scale-100 group-hover:bg-red-800/50"></div>
+                    </button>
+                </div>
+
+                <!-- 第一幕：入戏之重 -->
+                <div id="act-1" class="hidden">
+                    <div class="mb-8 text-center">
+                        <span class="text-red-400 text-sm tracking-widest uppercase border border-red-900/50 px-3 py-1 rounded-full">第一幕 · 入戏之重</span>
+                    </div>
+                    <div class="theater-card rounded-2xl p-8 md:p-12 mb-8">
+                        <div class="spotlight" id="spotlight-1"></div>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-6 glow-text serif leading-relaxed">
+                            "离话剧比赛只有一周了，你还睡得着？<br>
+                            传递情报你演成逛菜市场，监狱受刑你演成肚子着凉——<br>
+                            猫当不了老虎，鸡变不成凤凰，你方绍闻永远也不会是冷少农！"
+                        </h3>
+                        <p class="text-stone-400 mb-8 text-lg">面对徐安萌的质问，你的第一反应是：</p>
+                        
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <button onclick="makeChoice(1, 'a')" class="choice-btn p-6 rounded-xl text-left group">
+                                <div class="text-red-400 text-2xl mb-3 group-hover:scale-110 transition-transform">✦</div>
+                                <div class="font-medium text-lg mb-2">辩解挣扎</div>
+                                <div class="text-sm text-stone-400">"我状态不好...麻烦你换别人吧，我就不耽误大家了"</div>
+                            </button>
+                            <button onclick="makeChoice(1, 'b')" class="choice-btn p-6 rounded-xl text-left group">
+                                <div class="text-red-400 text-2xl mb-3 group-hover:scale-110 transition-transform">✦</div>
+                                <div class="font-medium text-lg mb-2">沉默接受</div>
+                                <div class="text-sm text-stone-400">低头不语，内心翻涌但选择先听导演把话说完</div>
+                            </button>
+                            <button onclick="makeChoice(1, 'c')" class="choice-btn p-6 rounded-xl text-left group">
+                                <div class="text-red-400 text-2xl mb-3 group-hover:scale-110 transition-transform">✦</div>
+                                <div class="font-medium text-lg mb-2">反问探索</div>
+                                <div class="text-sm text-stone-400">"成为？成为冷少农？具体...需要我怎么做？"</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="flex gap-2">
+                            <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+                            <div class="w-12 h-1 bg-stone-700 rounded-full"></div>
+                            <div class="w-12 h-1 bg-stone-700 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第二幕：忠孝之择 -->
+                <div id="act-2" class="hidden">
+                    <div class="mb-8 text-center">
+                        <span class="text-red-400 text-sm tracking-widest uppercase border border-red-900/50 px-3 py-1 rounded-full">第二幕 · 忠孝之择</span>
+                    </div>
+                    <div class="theater-card rounded-2xl p-8 md:p-12 mb-8">
+                        <div class="spotlight" id="spotlight-2"></div>
+                        <div class="flex flex-col md:flex-row gap-8 items-center">
+                            <div class="flex-1">
+                                <h3 class="text-2xl md:text-3xl font-bold mb-6 glow-text serif leading-relaxed">
+                                    "你是觉得你当了爹，翅膀硬了，娘的话都听不得了是吧？<br>
+                                    不忠不孝、忘恩负义的白眼狼！"
+                                </h3>
+                                <p class="text-stone-400 mb-8 text-lg">宋德惠（母亲）倒地，商娴贞含泪相望。你（冷少农）站在十字路口：</p>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <button onclick="makeChoice(2, 'a')" class="choice-btn w-full p-6 rounded-xl text-left flex items-center gap-4 group">
+                                <div class="w-12 h-12 rounded-full bg-stone-800 flex items-center justify-center text-red-400 font-bold text-xl group-hover:bg-red-900 transition-colors">A</div>
+                                <div>
+                                    <div class="font-medium text-lg mb-1">温柔但坚定地告别</div>
+                                    <div class="text-sm text-stone-400">"娘，其他家长里短我都依您。但这件事上，您做不了我的主。"俯身磕头，提起行李箱转身离去</div>
+                                </div>
+                            </button>
+                            <button onclick="makeChoice(2, 'b')" class="choice-btn w-full p-6 rounded-xl text-left flex items-center gap-4 group">
+                                <div class="w-12 h-12 rounded-full bg-stone-800 flex items-center justify-center text-red-400 font-bold text-xl group-hover:bg-red-900 transition-colors">B</div>
+                                <div>
+                                    <div class="font-medium text-lg mb-1">犹豫再三，折返安抚</div>
+                                    <div class="text-sm text-stone-400">放下箱子，试图解释外面世界的混乱与机遇，希望获得理解再走</div>
+                                </div>
+                            </button>
+                            <button onclick="makeChoice(2, 'c')" class="choice-btn w-full p-6 rounded-xl text-left flex items-center gap-4 group">
+                                <div class="w-12 h-12 rounded-full bg-stone-800 flex items-center justify-center text-red-400 font-bold text-xl group-hover:bg-red-900 transition-colors">C</div>
+                                <div>
+                                    <div class="font-medium text-lg mb-1">托付而非告别</div>
+                                    <div class="text-sm text-stone-400">向妻子深鞠一躬："家里老少拜托你了。"避开母亲的目光，快步离去不再回头</div>
+                                </div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="flex gap-2">
+                            <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+                            <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+                            <div class="w-12 h-1 bg-stone-700 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 第三幕：信仰之试 -->
+                <div id="act-3" class="hidden">
+                    <div class="mb-8 text-center">
+                        <span class="text-red-400 text-sm tracking-widest uppercase border border-red-900/50 px-3 py-1 rounded-full">第三幕 · 信仰之试</span>
+                    </div>
+                    <div class="theater-card rounded-2xl p-8 md:p-12 mb-8">
+                        <div class="spotlight" id="spotlight-3"></div>
+                        <h3 class="text-2xl md:text-3xl font-bold mb-6 glow-text serif leading-relaxed">
+                            "只要你肯写份悔过书，就什么事都没有了。<br>
+                            想想你的母亲、妻子，还有你7岁的儿子...<br>
+                            是，你被处决后是解脱了，那他们孤儿寡母呢？"
+                        </h3>
+                        <p class="text-stone-400 mb-8 text-lg">何应钦（恩师）最后一次劝降。你已被押至审讯室，窗外隐约可见雨花台：</p>
+                        
+                        <div class="grid gap-4">
+                            <button onclick="makeChoice(3, 'a')" class="choice-btn p-6 rounded-xl text-left border-l-4 border-l-transparent hover:border-l-red-600 transition-all">
+                                <div class="font-medium text-xl mb-2 serif">"无可奉告"</div>
+                                <div class="text-stone-400">决绝闭目，不再多言。知道结局已定，但求一死以证清白。</div>
+                            </button>
+                            <button onclick="makeChoice(3, 'b')" class="choice-btn p-6 rounded-xl text-left border-l-4 border-l-transparent hover:border-l-red-600 transition-all">
+                                <div class="font-medium text-xl mb-2 serif">"升官发财行往他处，贪生怕死勿入斯门"</div>
+                                <div class="text-stone-400">冷笑回应，引用当年黄埔校训，唤醒老师初心，哪怕明知无用。</div>
+                            </button>
+                            <button onclick="makeChoice(3, 'c')" class="choice-btn p-6 rounded-xl text-left border-l-4 border-l-transparent hover:border-l-red-600 transition-all">
+                                <div class="font-medium text-xl mb-2 serif">提笔又止，最终撕碎纸稿</div>
+                                <div class="text-stone-400">看着儿子的照片流下眼泪，但毅然撕碎悔过书。为了苍儿将来不做"野孩子"，更不做"罪人"的孩子。</div>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="flex justify-center">
+                        <div class="flex gap-2">
+                            <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+                            <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+                            <div class="w-12 h-1 bg-red-600 rounded-full"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 结果展示 -->
+                <div id="act-result" class="hidden">
+                    <div class="text-center mb-8">
+                        <span class="text-amber-400 text-sm tracking-widest uppercase border border-amber-900/30 px-3 py-1 rounded-full">尘埃落定</span>
+                    </div>
+                    
+                    <div class="soul-card rounded-2xl p-8 md:p-12 text-stone-800 relative overflow-hidden">
+                        <!-- 装饰性背景字 -->
+                        <div class="absolute -right-10 -top-10 text-9xl font-bold text-red-900/5 select-none serif" id="bg-text">魂</div>
+                        
+                        <div class="relative z-10 text-center">
+                            <p class="text-stone-600 mb-4 text-lg">通过三幕抉择，你的灵魂与</p>
+                            <h2 id="result-title" class="text-4xl md:text-6xl font-bold text-red-900 mb-4 serif tracking-wide"></h2>
+                            <div id="result-subtitle" class="text-xl text-stone-600 mb-8 font-medium"></div>
+                            
+                            <div class="bg-white/60 backdrop-blur rounded-xl p-6 md:p-8 mb-8 text-left border border-stone-200">
+                                <p id="result-desc" class="text-lg leading-relaxed text-stone-700 mb-6"></p>
+                                <div class="border-l-4 border-red-800 pl-6 py-2 bg-red-50/50 rounded-r-lg">
+                                    <p id="result-quote" class="text-stone-800 italic serif text-lg leading-relaxed"></p>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap justify-center gap-4">
+                                <button onclick="restartTheater()" class="bg-red-900 hover:bg-red-800 text-white px-8 py-3 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl">
+                                    再次入戏
+                                </button>
+                                <button onclick="shareTheaterResult()" class="border-2 border-stone-800 text-stone-800 hover:bg-stone-800 hover:text-white px-8 py-3 rounded-full font-medium transition-all duration-300">
+                                    分享灵魂共鸣
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系区域 -->
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16 scroll-reveal">
+                <h2 class="text-4xl md:text-5xl font-bold text-gray-900 mb-6 serif">联系我们</h2>
+                <p class="text-xl text-gray-600">欢迎与我们交流合作</p>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <div class="scroll-reveal">
+                    <div class="bg-gray-50 rounded-lg shadow-lg p-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">剧组信息</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-red-800 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                </svg>
+                                <span class="text-gray-700">地址：北京市房山区拱辰街道长于大街11号</span>
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-red-800 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                                </svg>
+                                <span class="text-gray-700">电话：18580131576</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="scroll-reveal">
+                    <div class="bg-gray-50 rounded-lg shadow-lg p-8">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">合作咨询</h3>
+                        <form id="contact-form" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">姓名</label>
+                                <input type="text" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800 focus:border-transparent" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">联系电话</label>
+                                <input type="tel" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800 focus:border-transparent" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">合作意向</label>
+                                <textarea rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-800 focus:border-transparent" placeholder="请简要描述您的合作意向..."></textarea>
+                            </div>
+                            <button type="submit" class="w-full bg-red-800 hover:bg-red-900 text-white py-3 rounded-lg font-medium transition-all duration-300">
+                                提交咨询
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<!-- 页脚 - 美化版（使用自定义SVG） -->
+<footer class="relative bg-gradient-to-b from-gray-900 via-gray-900 to-black text-white overflow-hidden">
+  <!-- 装饰性背景文字 -->
+  <div class="absolute inset-0 flex items-center justify-center opacity-[0.02] pointer-events-none select-none">
+    <span class="text-[20rem] font-bold" style="font-family:'Noto Serif SC',serif;">家书</span>
+  </div>
+  
+  <!-- 顶部红色分隔线 -->
+  <div class="w-full h-1 bg-gradient-to-r from-transparent via-red-800 to-transparent"></div>
+  
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
+      
+      <!-- 品牌介绍区 -->
+      <div class="lg:col-span-2 space-y-6">
+        <div class="flex items-center space-x-3">
+          <div class="w-1 h-8 bg-red-700 rounded-full"></div>
+          <h3 class="text-2xl font-bold tracking-wider" style="font-family:'Noto Serif SC',serif;">行走的思政课</h3>
+        </div>
+        <p class="text-gray-400 leading-relaxed max-w-md text-sm">
+          中国社会科学院大学首部原创舞台剧《家书》，以"因为一封信，而去寻找一个人"为主线，讲述百年来两代青年人在历史回响中相逢，在彼此照亮中完成精神接力的动人故事。
+        </p>
+        <div class="flex items-center space-x-2 text-red-400 text-sm italic" style="font-family:'Noto Serif SC',serif;">
+          <span class="w-8 h-px bg-red-800/50"></span>
+          <span>山川会记得，日月会记得，我们会记得</span>
+        </div>
+      </div>
+
+      <!-- 快速导航 -->
+      <div class="space-y-6">
+        <h4 class="text-lg font-semibold text-gray-200 border-b border-gray-800 pb-2 inline-block">快速导航</h4>
+        <ul class="space-y-3 text-sm">
+          <li>
+            <a href="index.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              首页
+            </a>
+          </li>
+          <li>
+            <a href="schedule.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              演出信息
+            </a>
+          </li>
+          <li>
+            <a href="cast.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              演员阵容
+            </a>
+          </li>
+          <li>
+            <a href="backstage.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              台前幕后
+            </a>
+          </li>
+          <li>
+            <a href="honor.html" class="text-gray-400 hover:text-red-400 transition-colors duration-300 flex items-center group">
+              <span class="w-0 group-hover:w-2 h-px bg-red-600 mr-0 group-hover:mr-2 transition-all duration-300"></span>
+              获得荣誉
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- 联系方式与社交 -->
+      <div class="space-y-6">
+        <h4 class="text-lg font-semibold text-gray-200 border-b border-gray-800 pb-2 inline-block">关注我们</h4>
+        <p class="text-gray-500 text-sm">获取最新演出动态与幕后故事</p>
+        
+        <div class="flex space-x-4">
+          <!-- 小红书（保持原样） -->
+          <a href="https://www.xiaohongshu.com/user/profile/6496d325000000000f005b9d" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-red-600 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-red-600/30 group"
+             target="_blank" rel="noopener noreferrer" aria-label="小红书">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" class="rounded overflow-hidden opacity-80 group-hover:opacity-100">
+              <image width="20" height="20" href="data:image/png;base64,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"/>
+            </svg>
+          </a>
+          
+          <!-- 微信（基于你提供的SVG） -->
+          <a href="https://3839069.ma3you.cn/html/content_show/index.html?v=20250213&article_id=RPdk2w4#/" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-[#07C160] flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-[#07C160]/30 group"
+             target="_blank" rel="noopener noreferrer" aria-label="微信公众号">
+            <svg viewBox="0 0 2499.7 2024.2" width="20" height="20" xmlns="http://www.w3.org/2000/svg" class="opacity-80 group-hover:opacity-100">
+              <path d="m2499.7 1313.8c0-347.3-335.9-630.6-749.5-630.6s-747.2 283.3-747.2 630.6 335.9 630.6 749.5 630.6c80 0 155.4-9.1 226.2-29.7 20.6-4.6 43.4-2.3 64 6.9l185.1 100.5c11.4 6.9 27.4-4.6 22.8-18.3l-36.6-148.5c-4.6-22.8 2.3-45.7 22.8-59.4 160.1-116.5 262.9-287.9 262.9-482.1zm-1016.8-82.2c-57.1 0-102.8-45.7-102.8-102.8s45.7-102.8 102.8-102.8 102.8 45.7 102.8 102.8-45.7 102.8-102.8 102.8zm505 0c-57.1 0-102.8-45.7-102.8-102.8s45.7-102.8 102.8-102.8 102.8 45.7 102.8 102.8-48 102.8-102.8 102.8z" fill="white"/>
+              <path d="m941.4 1316.1c0-386.1 365.6-699.2 818-699.2h34.3c-73.2-349.6-443.3-616.9-888.9-616.9-500.4 0-904.8 333.6-904.8 747.2 0 228.5 125.7 434.1 322.2 571.2 13.7 9.1 18.3 25.1 16 41.1l-68.5 242.2c-4.6 16 13.7 32 29.7 22.8l267.3-159.9c18.3-11.4 38.8-13.7 59.4-6.9 89.1 22.8 182.8 36.6 278.8 36.6 20.6 0 41.1 0 64-2.3-18.4-57.1-27.5-116.5-27.5-175.9zm267.3-920.8c66.3 0 121.1 54.8 121.1 121.1s-54.8 121.1-121.1 121.1-121.1-54.8-121.1-121.1 54.9-121.1 121.1-121.1zm-607.8 242.2c-66.3 0-121.1-54.8-121.1-121.1s54.8-121.1 121.1-121.1 121.1 54.8 121.1 121.1-52.5 121.1-121.1 121.1z" fill="white"/>
+            </svg>
+          </a>
+
+            <!-- Bilibili（已修复） -->
+          <a href="https://space.bilibili.com/667615559" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-pink-400 flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-pink-400/30"
+             target="_blank" rel="noopener noreferrer" aria-label="Bilibili">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M17.813 4.653h.854c1.51.054 2.769.578 3.773 1.574 1.004.995 1.524 2.249 1.56 3.76v7.36c-.036 1.51-.556 2.769-1.56 3.773s-2.262 1.524-3.773 1.56H5.333c-1.51-.036-2.769-.556-3.773-1.56S.036 18.858 0 17.347v-7.36c.036-1.511.556-2.765 1.56-3.76 1.004-.996 2.262-1.52 3.773-1.574h.774l-1.174-1.12a1.234 1.234 0 0 1-.373-.906c0-.356.124-.658.373-.907l.027-.027c.267-.249.573-.373.92-.373.347 0 .653.124.92.373L9.653 4.44c.071.071.134.142.187.213h4.267a.836.836 0 0 1 .16-.213l2.853-2.747c.267-.249.573-.373.92-.373.347 0 .662.151.929.4.267.249.391.551.391.907 0 .355-.124.657-.373.906zM5.333 7.24c-.746.018-1.373.276-1.88.773-.506.498-.769 1.13-.786 1.894v7.52c.017.764.28 1.395.786 1.893.507.498 1.134.756 1.88.773h13.334c.746-.017 1.373-.275 1.88-.773.506-.498.769-1.129.786-1.893v-7.52c-.017-.765-.28-1.396-.786-1.894-.507-.497-1.134-.755-1.88-.773zM8 11.107c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c0-.373.129-.689.386-.947.258-.257.574-.386.947-.386zm8 0c.373 0 .684.124.933.373.25.249.383.569.4.96v1.173c-.017.391-.15.711-.4.96-.249.25-.56.374-.933.374s-.684-.125-.933-.374c-.25-.249-.383-.569-.4-.96V12.44c.017-.391.15-.711.4-.96.249-.249.56-.373.933-.373z" fill="white"/>
+            </svg>
+          </a>
+
+          <!-- 微博（基于你提供的SVG，改为白色填充） -->
+          <a href="https://weibo.com" 
+             class="w-10 h-10 rounded-full bg-gray-800 hover:bg-[#FFC125] flex items-center justify-center transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-[#E6162D]/30 group"
+             target="_blank" rel="noopener noreferrer" aria-label="微博">
+            <svg viewBox="0 0 50.497 40.648" width="20" height="16" xmlns="http://www.w3.org/2000/svg" class="opacity-80 group-hover:opacity-100">
+              <path d="M50.448 12.132c.217 2.814-.259 6.186-2.117 6.351-3.033.271-1.451-3.07-1.411-5.081.111-5.829-4.865-9.879-9.739-9.879-1.381 0-4.588.936-4.094-1.976.222-1.284 1.31-1.266 2.399-1.411 8.197-1.093 14.386 4.546 14.962 11.996z" fill="white"/>
+              <path d="M37.04 18.907c3.524 1.928 7.758 2.888 7.056 8.61-.168 1.371-.998 3.203-1.834 4.373-5.957 8.339-23.924 11.844-35.144 5.506C3.355 35.269-.539 32.159.062 25.962c.517-5.333 4.103-9.464 7.622-12.983 3.357-3.359 6.897-5.987 11.714-7.198 5.226-1.314 6.771 3.043 5.363 7.339 3.027-.203 9.442-3.582 12.279-.282 1.25 1.454.771 4.058 0 6.069zm-3.811 13.548c1.129-1.28 2.264-3.231 2.257-5.503-.015-7.014-8.851-9.605-15.806-9.033-3.804.312-6.363 1.115-9.033 2.682-2.179 1.279-4.729 3.36-5.363 6.491-1.427 7.041 6.231 10.35 11.855 10.726 6.498.437 13.002-1.857 16.09-5.363z" fill="white"/>
+              <path d="M43.531 12.132c.296 2.149-.319 4.011-1.552 4.093-2.056.137-1.287-1.408-1.412-3.246-.078-1.132-1.016-2.439-1.835-2.823-1.606-.752-4.093.548-4.093-1.693 0-1.664 1.443-1.491 2.259-1.553 3.574-.272 6.216 2.191 6.633 5.222z" fill="white"/>
+              <path d="M27.019 26.246c3.007 9.088-12.66 13.314-15.525 5.504-1.917-5.223 2.686-9.377 7.48-9.879 4.093-.429 7.144 1.658 8.045 4.375zm-7.198 1.553c.638 1.104 2.105.311 1.976-.564-.154-1.013-1.989-.863-1.976.564zm-2.541 4.799c2.634-.627 2.988-5.588-.988-4.658-3.34.78-2.694 5.533.988 4.658z" fill="white"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部分隔线与版权 -->
+    <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+      <div class="flex flex-col md:flex-row items-center space-y-2 md:space-y-0 md:space-x-4 text-sm text-gray-500">
+        <span>&copy; 2025 中国社会科学院大学学生艺术团主题剧队</span>
+        <span class="hidden md:inline text-gray-700">|</span>
+        <span>制作：牟思源</span>
+      </div>
+      <div class="flex items-center space-x-4 text-xs text-gray-600">
+        <a href="#" class="hover:text-gray-400 transition-colors">隐私政策</a>
+        <span class="text-gray-700">•</span>
+        <a href="#" class="hover:text-gray-400 transition-colors">使用条款</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+    <script>
+        // 聚光灯效果
+        document.addEventListener('mousemove', (e) => {
+            document.querySelectorAll('.spotlight').forEach(spot => {
+                const rect = spot.parentElement.getBoundingClientRect();
+                spot.style.left = (e.clientX - rect.left) + 'px';
+                spot.style.top = (e.clientY - rect.top) + 'px';
+            });
+        });
+
+        let choices = {};
+        let currentAct = 0;
+
+        const acts = ['act-start', 'act-1', 'act-2', 'act-3', 'act-result'];
+
+        function startTheater() {
+            switchAct(1);
+            // 入场动画
+            anime({
+                targets: '#act-1',
+                opacity: [0, 1],
+                translateY: [30, 0],
+                duration: 800,
+                easing: 'easeOutExpo'
+            });
+        }
+
+        function switchAct(actNum) {
+            acts.forEach((id, idx) => {
+                const el = document.getElementById(id);
+                if (idx === actNum) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+            currentAct = actNum;
+        }
+
+        function makeChoice(act, choice) {
+            choices[act] = choice;
+            
+            // 视觉反馈
+            const btn = event.currentTarget;
+            btn.classList.add('selected');
+            
+            // 禁用其他按钮
+            const siblings = btn.parentElement.querySelectorAll('.choice-btn');
+            siblings.forEach(sib => {
+                sib.style.pointerEvents = 'none';
+                if (sib !== btn) sib.style.opacity = '0.4';
+            });
+
+            // 延迟跳转
+            setTimeout(() => {
+                if (act < 3) {
+                    switchAct(act + 1);
+                    anime({
+                        targets: `#act-${act + 1}`,
+                        opacity: [0, 1],
+                        translateX: [50, 0],
+                        duration: 600,
+                        easing: 'easeOutCubic'
+                    });
+                } else {
+                    showResult();
+                }
+            }, 800);
+        }
+
+        function calculateResult() {
+            // 基于三幕选择的角色匹配算法
+            const c1 = choices[1], c2 = choices[2], c3 = choices[3];
+            
+            // 冷少农：坚定决绝 (c, a, a) 或 (c, c, a) 或 (b, a, a) 等组合
+            if ((c2 === 'a' || c2 === 'c') && c3 === 'a') {
+                return 'lengshaonong';
+            }
+            // 方绍闻：从迷茫到领悟 (a, b, b) 或 (a, a, b)
+            if (c1 === 'a' && (c2 === 'a' || c2 === 'b') && c3 === 'b') {
+                return 'fangshaowen';
+            }
+            // 徐安萌：引导者 (c, *, *) 且在关键时刻有主见
+            if (c1 === 'c' && c3 === 'b') {
+                return 'xuanneng';
+            }
+            // 商娴贞：包容支持 (*, c, c) 
+            if (c2 === 'c' && c3 === 'c') {
+                return 'shangxianzhen';
+            }
+            // 宋德惠：情感牵挂 (*, *, c)
+            if (c3 === 'c' && c2 !== 'c') {
+                return 'songdehui';
+            }
+            // 其他情况根据第一幕倾向
+            if (c1 === 'b') return 'shangxianzhen';
+            if (c1 === 'c') return 'xuanneng';
+            
+            return 'fangshaowen'; // 默认
+        }
+
+        function showResult() {
+            const character = calculateResult();
+            const results = {
+                lengshaonong: {
+                    title: "冷少农",
+                    subtitle: "革命烈士 · 坚如磐石的信仰者",
+                    desc: "你的灵魂里住着一位殉道者。面对质疑，你选择承担而非逃避；面对离别，你温柔却决绝；面对死亡，你宁折不弯。你理解'把孝移去孝顺大多数痛苦的人类'意味着什么。在你的价值排序里，信仰高于生命，大义重于小家。",
+                    quote: "我之爱你，是望你将来为一极平凡而有能力为一般劳苦民众解决不能解决之各项问题...社会之新光在照耀着你，希望你猛进。",
+                    bg: "忠"
+                },
+                fangshaowen: {
+                    title: "方绍闻",
+                    subtitle: "现代青年 · 在迷茫中寻找光的旅人",
+                    desc: "你代表这一代人的成长轨迹。从自我怀疑'我是不是永远也成为不了他'，到在体验中逐渐理解'成为'的真谛。你的敏感与共情是天赋，让你能通过艺术穿越时空，与历史对话。你需要的是时间，和对'过程'的耐心。",
+                    quote: "关键不在于'表演'他，而在于'成为'他。我好像找到你了，冷少农。",
+                    bg: "蜕"
+                },
+                xuanneng: {
+                    title: "徐安萌",
+                    subtitle: "导演 · 灵魂的引路人",
+                    desc: "你拥有化繁为简的智慧和坚定的领导力。当别人还在情绪中挣扎，你已经看到了'成为'的路径。你善于用提问代替说教，用体验代替讲解。在你的世界里，没有'不可能'，只有'还没找到方法'。",
+                    quote: "绍闻啊，你觉得远是因为你在'表演'他，关键在于'成为'他。来，我带你'成为'冷少农。",
+                    bg: "引"
+                },
+                shangxianzhen: {
+                    title: "商娴贞",
+                    subtitle: "妻子 · 大地般的包容者",
+                    desc: "你的力量在温柔中显现。你理解人性的复杂，不强行改变他人的选择，而是成为那个永远接纳的港湾。'你在外面走正道、干大事，我们在家就等你回来'——这种无条件的信任，是世间最难得的力量。",
+                    quote: "你一向是有主意的...你在外面走正道、干大事，只管大胆闯荡，别束手束脚的。",
+                    bg: "守"
+                },
+                songdehui: {
+                    title: "宋德惠",
+                    subtitle: "母亲 · 深沉的牵挂",
+                    desc: "你的爱质朴而沉重。你或许不理解那些宏大的理想，但你知道什么是家的分量。你的'责骂'背后是恐惧失去，你的'阻拦'源于保护欲。这种基于本能的爱，是英雄们身后最柔软的支撑，也是他们最深的愧疚。",
+                    quote: "农儿，娘怎么舍得怨你...只图你能平平安安的，只图你能平平安安的！",
+                    bg: "爱"
+                }
+            };
+
+            const r = results[character];
+            document.getElementById('result-title').textContent = r.title;
+            document.getElementById('result-subtitle').textContent = r.subtitle;
+            document.getElementById('result-desc').textContent = r.desc;
+            document.getElementById('result-quote').textContent = r.quote;
+            document.getElementById('bg-text').textContent = r.bg;
+
+            switchAct(4);
+            
+            anime({
+                targets: '#act-result',
+                opacity: [0, 1],
+                scale: [0.9, 1],
+                duration: 800,
+                easing: 'easeOutExpo'
+            });
+        }
+
+        function restartTheater() {
+            choices = {};
+            document.querySelectorAll('.choice-btn').forEach(btn => {
+                btn.classList.remove('selected');
+                btn.style.pointerEvents = 'auto';
+                btn.style.opacity = '1';
+            });
+            switchAct(0);
+        }
+
+        function shareTheaterResult() {
+            const title = document.getElementById('result-title').textContent;
+            const text = `我在《家书》"三幕入戏"互动体验中，灵魂共鸣的角色是：${title}。不是表演，而是成为。你也来试试？`;
+            
+            if (navigator.share) {
+                navigator.share({ title: '《家书》灵魂共鸣测试', text: text, url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(text + ' ' + window.location.href);
+                alert('已复制到剪贴板');
+            }
+        }
+
+        // 滚动显示
+        function initScrollReveal() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('revealed');
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            document.querySelectorAll('.scroll-reveal').forEach(el => observer.observe(el));
+        }
+
+        // 表单提交
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('感谢您的咨询！我们会尽快与您联系。');
+            e.target.reset();
+        });
+
+        // 移动端菜单
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+
+        document.addEventListener('DOMContentLoaded', initScrollReveal);
+    </script>
+</body>
+</html>

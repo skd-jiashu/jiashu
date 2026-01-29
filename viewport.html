@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>剧照墙</title>
+    
+    <!-- 外部样式库 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ma+Shan+Zheng&family=Noto+Serif+SC:wght@400;700&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="main.css">
+
+    <style>
+        /* ===========================================
+           基础重置与工具类
+           =========================================== */
+        /* 书法字体工具类 */
+        .calligraphy {
+            font-family: 'Ma Shan Zheng', cursive;
+        }
+
+        /* 图片自适应填充 */
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* ===========================================
+           爱心粒子特效样式
+           =========================================== */
+        .heart {
+            width: 10px;
+            height: 10px;
+            position: fixed;
+            background: #f00;
+            transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            -moz-transform: rotate(45deg);
+        }
+
+        .heart::after,
+        .heart::before {
+            content: '';
+            width: inherit;
+            height: inherit;
+            background: inherit;
+            border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            position: fixed;
+        }
+
+        .heart::after {
+            top: -5px;
+        }
+
+        .heart::before {
+            left: -5px;
+        }
+
+        /* ===========================================
+           启动按钮样式 (Click Me)
+           =========================================== */
+        .click_me {
+            width: 200px;
+            aspect-ratio: 1;
+            font-size: 30px;
+            color: #fff;
+            background: none;
+            border: none;
+            border-radius: 20px;
+            position: relative;
+            z-index: 0;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        /* 光晕动画层 */
+        .click_me::before {
+            content: "";
+            position: absolute;
+            inset: -8px;
+            padding: 8px;
+            border-radius: 28px;
+            background: conic-gradient(from var(--d, 0deg), #21D4FD, #0000 30deg 120deg, #B721FF 150deg 180deg, #0000 210deg 300deg, #21D4FD 330deg);
+            -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: intersect;
+        }
+
+        /* 流光背景层 */
+        .click_me::after {
+            content: "";
+            position: absolute;
+            inset: -100px;
+            background: 
+                radial-gradient(80px at left 150px top 120px, #21D4FD 98%, #0000),
+                radial-gradient(80px at right 150px bottom 120px, #B721FF 98%, #0000);
+            filter: blur(60px);
+            opacity: 0.5;
+        }
+
+        /* 悬停旋转动画 */
+        .click_me::before,
+        .click_me::after {
+            transition: 0.5s, 99999s 99999s transform, 99999s 99999s --d;
+        }
+
+        .click_me:hover {
+            box-shadow: 0 0 0 1px #666;
+        }
+
+        .click_me:hover::after {
+            transform: rotate(3600deg);
+            transition: 0.5s, 60s linear transform;
+        }
+
+        .click_me:hover::before {
+            --d: 3600deg;
+            transition: 0.5s, 60s linear --d;
+        }
+
+        /* CSS自定义属性定义 */
+        @property --d {
+            syntax: '<angle>';
+            inherits: true;
+            initial-value: 0deg;
+        }
+
+        /* ===========================================
+           3D旋转舞台布局
+           =========================================== */
+        body {
+            overflow: hidden;
+            display: flex;
+            perspective: 1000px;
+            background: #111;
+        }
+
+        #dragBox, 
+        .spinBox {
+            position: relative;
+            display: flex;
+            margin: auto;
+            transform-style: preserve-3d;
+            transform: rotateX(-10deg);
+        }
+
+        #dragBox {
+            transform: rotateX(-30deg);
+        }
+
+        .spinBox {
+            width: 150px;
+            height: 100px;
+            animation: spin 200s infinite linear;
+        }
+
+        /* 两层补充容器 */
+        #spinBox2 {
+            position: absolute;
+            top: 120%;
+        }
+
+        #spinBox3 {
+            position: absolute;
+            top: -120%;
+        }
+
+        /* 3D场景中的图片 */
+        #dragBox img {
+            transform-style: preserve-3d;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            box-shadow: 0 0 8px #fff;
+            -webkit-box-reflect: below 10px linear-gradient(transparent, transparent, #0005);
+        }
+
+        #dragBox img:hover {
+            box-shadow: 0 0 15px #fff;
+        }
+
+        /* 持续旋转动画 */
+        @keyframes spin {
+            from {
+                transform: rotateY(0deg);
+            }
+            to {
+                transform: rotateY(360deg);
+            }
+        }
+
+        /* ===========================================
+           启动按钮居中容器
+           =========================================== */
+        .click_me_shell {
+            margin: 0;
+            display: grid;
+            place-content: center;
+            grid-auto-flow: column;
+            background: #1b1b1c;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+</head>
+
+<body class="bg-black m-0 p-0 flex items-center justify-center min-h-screen">
+    <!-- 启动界面容器 -->
+    <div class="click_me_shell" id="click_me_shell">
+        <audio loop src="img/落在生命里的光-尹昔眠.m4a" id="audio" autoplay preload="auto"></audio>
+        <button class="click_me">点击进入</button>
+    </div>
+
+    <!-- 3D旋转相册主体 -->
+    <div id="dragBox">
+        <!-- 中层旋转环 -->
+        <div class="spinBox" id="spinBox">
+            <img src="./img/viewport/ht (1).png" alt="剧照1">
+            <img src="./img/viewport/ht (2).png" alt="剧照2">
+            <img src="./img/viewport/ht (3).png" alt="剧照3">
+            <img src="./img/viewport/ht (4).png" alt="剧照4">
+            <img src="./img/viewport/ht (5).png" alt="剧照5">
+            <img src="./img/viewport/ht (6).png" alt="剧照6">
+            <img src="./img/viewport/ht (7).png" alt="剧照7">
+            <img src="./img/viewport/ht (8).png" alt="剧照8">
+            <img src="./img/viewport/ht (9).png" alt="剧照9">
+            <img src="./img/viewport/ht (10).png" alt="剧照10">
+            <img src="./img/viewport/ht (11).png" alt="剧照11">
+            <img src="./img/viewport/ht (12).png" alt="剧照12">
+            <img src="./img/viewport/ht (13).png" alt="剧照13">
+            <img src="./img/viewport/ht (1).png" alt="剧照14">
+            <img src="./img/viewport/ht (2).png" alt="剧照15">
+            <img src="./img/viewport/ht (3).png" alt="剧照16">
+            <img src="./img/viewport/ht (4).png" alt="剧照17">
+            <img src="./img/viewport/ht (5).png" alt="剧照18">
+            <img src="./img/viewport/ht (6).png" alt="剧照19">
+            <img src="./img/viewport/ht (7).png" alt="剧照20">
+            <img src="./img/viewport/ht (8).png" alt="剧照21">
+            <img src="./img/viewport/ht (9).png" alt="剧照22">
+            <img src="./img/viewport/ht (10).png" alt="剧照23">
+            <img src="./img/viewport/ht (11).png" alt="剧照24">
+            <img src="./img/viewport/ht (12).png" alt="剧照25">
+            <img src="./img/viewport/ht (13).png" alt="剧照26">
+        </div>
+
+        <!-- 下层旋转环 -->
+        <div class="spinBox" id="spinBox2">
+            <img src="./img/viewport/ht (2).png" alt="剧照27">
+            <img src="./img/viewport/ht (3).png" alt="剧照28">
+            <img src="./img/viewport/ht (4).png" alt="剧照29">
+            <img src="./img/viewport/ht (5).png" alt="剧照30">
+            <img src="./img/viewport/ht (6).png" alt="剧照31">
+            <img src="./img/viewport/ht (7).png" alt="剧照32">
+            <img src="./img/viewport/ht (8).png" alt="剧照33">
+            <img src="./img/viewport/ht (9).png" alt="剧照34">
+            <img src="./img/viewport/ht (10).png" alt="剧照35">
+            <img src="./img/viewport/ht (11).png" alt="剧照36">
+            <img src="./img/viewport/ht (12).png" alt="剧照37">
+            <img src="./img/viewport/ht (13).png" alt="剧照38">
+            <img src="./img/viewport/ht (1).png" alt="剧照39">
+            <img src="./img/viewport/ht (2).png" alt="剧照40">
+            <img src="./img/viewport/ht (3).png" alt="剧照41">
+            <img src="./img/viewport/ht (4).png" alt="剧照42">
+            <img src="./img/viewport/ht (5).png" alt="剧照43">
+            <img src="./img/viewport/ht (6).png" alt="剧照44">
+            <img src="./img/viewport/ht (7).png" alt="剧照45">
+            <img src="./img/viewport/ht (8).png" alt="剧照46">
+            <img src="./img/viewport/ht (9).png" alt="剧照47">
+            <img src="./img/viewport/ht (10).png" alt="剧照48">
+            <img src="./img/viewport/ht (11).png" alt="剧照49">
+            <img src="./img/viewport/ht (12).png" alt="剧照50">
+            <img src="./img/viewport/ht (13).png" alt="剧照51">
+            <img src="./img/viewport/ht (1).png" alt="剧照52">
+        </div>
+
+        <!-- 上层旋转环 -->
+        <div class="spinBox" id="spinBox3">
+            <img src="./img/viewport/ht (3).png" alt="剧照53">
+            <img src="./img/viewport/ht (4).png" alt="剧照54">
+            <img src="./img/viewport/ht (5).png" alt="剧照55">
+            <img src="./img/viewport/ht (6).png" alt="剧照56">
+            <img src="./img/viewport/ht (7).png" alt="剧照57">
+            <img src="./img/viewport/ht (8).png" alt="剧照58">
+            <img src="./img/viewport/ht (9).png" alt="剧照59">
+            <img src="./img/viewport/ht (10).png" alt="剧照60">
+            <img src="./img/viewport/ht (11).png" alt="剧照61">
+            <img src="./img/viewport/ht (12).png" alt="剧照62">
+            <img src="./img/viewport/ht (13).png" alt="剧照63">
+            <img src="./img/viewport/ht (1).png" alt="剧照64">
+            <img src="./img/viewport/ht (2).png" alt="剧照65">
+            <img src="./img/viewport/ht (3).png" alt="剧照66">
+            <img src="./img/viewport/ht (4).png" alt="剧照67">
+            <img src="./img/viewport/ht (5).png" alt="剧照68">
+            <img src="./img/viewport/ht (6).png" alt="剧照69">
+            <img src="./img/viewport/ht (7).png" alt="剧照70">
+            <img src="./img/viewport/ht (8).png" alt="剧照71">
+            <img src="./img/viewport/ht (9).png" alt="剧照72">
+            <img src="./img/viewport/ht (10).png" alt="剧照73">
+            <img src="./img/viewport/ht (11).png" alt="剧照74">
+            <img src="./img/viewport/ht (12).png" alt="剧照75">
+            <img src="./img/viewport/ht (13).png" alt="剧照76">
+            <img src="./img/viewport/ht (1).png" alt="剧照77">
+            <img src="./img/viewport/ht (2).png" alt="剧照78">
+        </div>
+    </div>
+
+    <script>
+        /* ===========================================
+           全局配置与DOM引用
+           =========================================== */
+        const BASE_RADIUS = 700;      // 3D圆环基准半径
+        let radius = 720;             // 当前半径(支持滚轮缩放)
+        const RADIUS_MIN = 120;       // 最小缩放半径
+        const RADIUS_MAX = 800;       // 最大缩放半径
+
+        // DOM元素引用
+        const outDom = document.getElementById("dragBox");
+        const spinDom = document.getElementById("spinBox");
+        const spinDom2 = document.getElementById("spinBox2");
+        const spinDom3 = document.getElementById("spinBox3");
+
+        // 初始隐藏3D舞台
+        outDom.style.display = 'none';
+
+        // 获取所有图片元素
+        const aImg = Array.from(spinDom.getElementsByTagName('img'));
+        const aImg2 = Array.from(spinDom2.getElementsByTagName('img'));
+        const aImg3 = Array.from(spinDom3.getElementsByTagName('img'));
+
+        /* ===========================================
+           3D场景初始化
+           =========================================== */
+        /**
+         * 设置单个元素的3D变换样式
+         * @param {number} delayTime - 动画延迟时间
+         * @param {HTMLElement} dom - 目标元素
+         * @param {number} i - 元素索引
+         * @param {number} len - 总元素数量
+         */
+        function setStyle(delayTime, dom, i, len) {
+            // 根据半径动态计算缩放比例，最小缩放到0.3
+            const scale = Math.max(0.3, radius / BASE_RADIUS);
+            const angle = i * (360 / len);
+            
+            dom.style.transform = `rotateY(${angle}deg) translateZ(${radius}px) scale(${scale})`;
+            dom.style.transition = "transform 1s";
+            dom.style.transitionDelay = delayTime || `${(len - i) / 4}s`;
+        }
+
+        /**
+         * 初始化所有3D图片位置
+         * @param {number} delayTime - 统一的延迟时间(可选)
+         */
+        function init(delayTime) {
+            aImg.forEach((img, i) => setStyle(delayTime, img, i, aImg.length));
+            aImg2.forEach((img, i) => setStyle(delayTime, img, i, aImg2.length));
+            aImg3.forEach((img, i) => setStyle(delayTime, img, i, aImg3.length));
+        }
+
+        /* ===========================================
+           爱心粒子特效模块
+           =========================================== */
+        /**
+         * 初始化爱心跟随特效
+         * 在鼠标点击位置生成随机颜色的爱心粒子并缓慢消失
+         */
+        function initHeartEffect() {
+            const hearts = [];
+            const colors = () => {
+                const r = Math.floor(Math.random() * 255);
+                const g = Math.floor(Math.random() * 255);
+                const b = Math.floor(Math.random() * 255);
+                return `rgb(${r},${g},${b})`;
+            };
+
+            // 动画帧循环更新粒子状态
+            function animate() {
+                for (let i = hearts.length - 1; i >= 0; i--) {
+                    const heart = hearts[i];
+                    if (heart.alpha <= 0) {
+                        document.body.removeChild(heart.el);
+                        hearts.splice(i, 1);
+                    } else {
+                        heart.y -= 1;
+                        heart.scale += 0.004;
+                        heart.alpha -= 0.013;
+                        heart.el.style.cssText = `
+                            left: ${heart.x}px;
+                            top: ${heart.y}px;
+                            opacity: ${heart.alpha};
+                            transform: scale(${heart.scale}, ${heart.scale}) rotate(45deg);
+                            background: ${heart.color};
+                            z-index: 99999
+                        `;
+                    }
+                }
+                requestAnimationFrame(animate);
+            }
+
+            // 点击生成新粒子
+            function createHeart(e) {
+                const el = document.createElement("div");
+                el.className = "heart";
+                hearts.push({
+                    el: el,
+                    x: e.clientX - 5,
+                    y: e.clientY - 5,
+                    scale: 1,
+                    alpha: 1,
+                    color: colors()
+                });
+                document.body.appendChild(el);
+            }
+
+            // 绑定到全局点击
+            const originalClick = document.onclick;
+            document.onclick = function(e) {
+                if (originalClick) originalClick(e);
+                createHeart(e);
+            };
+
+            animate();
+        }
+
+        /* ===========================================
+           启动交互逻辑
+           =========================================== */
+        const clickMeShell = document.getElementById("click_me_shell");
+        
+        clickMeShell.addEventListener('click', () => {
+            // 切换显示状态
+            outDom.style.display = '';
+            clickMeShell.style.display = 'none';
+            
+            // 播放背景音乐
+            const audio = document.getElementById('audio');
+            audio.play().catch(err => console.log('音频自动播放被阻止:', err));
+            
+            // 启动爱心特效
+            initHeartEffect();
+            
+            // 延迟初始化3D场景，确保DOM已显示
+            setTimeout(() => init(1), 1000);
+        });
+
+        /* ===========================================
+           鼠标滚轮缩放控制
+           =========================================== */
+        document.addEventListener('wheel', (e) => {
+            e.preventDefault();
+            const delta = e.deltaY / 20 || -e.detail;
+            radius = Math.max(RADIUS_MIN, Math.min(RADIUS_MAX, radius + delta));
+            init(1); // 刷新位置应用新半径
+        }, { passive: false });
+
+        /* ===========================================
+           拖拽与惯性旋转控制
+           =========================================== */
+        let tX = 0, tY = 10;          // 当前旋转角度
+        let desX = 0, desY = 0;       // 惯性速度
+        let lastX = 0, lastY = 0;     // 上一帧位置
+        let isDragging = false;       // 拖拽状态标记
+
+        /**
+         * 控制自动旋转的播放/暂停
+         * @param {boolean} shouldPlay - true为播放，false为暂停
+         */
+        function toggleSpin(shouldPlay) {
+            const state = shouldPlay ? 'running' : 'paused';
+            spinDom.style.animationPlayState = state;
+            spinDom2.style.animationPlayState = state;
+            spinDom3.style.animationPlayState = state;
+        }
+
+        /**
+         * 应用旋转变换，限制X轴范围在0-180度
+         */
+        function updateTransform() {
+            // 限制X轴旋转范围
+            tY = Math.max(0, Math.min(180, tY));
+            outDom.style.transform = `rotateX(${-tY}deg) rotateY(${tX}deg)`;
+        }
+
+        // 鼠标拖拽事件处理
+        document.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            clearInterval(outDom.timer); // 清除惯性
+            lastX = e.clientX;
+            lastY = e.clientY;
+            
+            document.addEventListener('pointermove', handleMove);
+            document.addEventListener('pointerup', handleUp);
+        });
+
+        function handleMove(e) {
+            if (!isDragging) return;
+            
+            toggleSpin(false); // 暂停自动旋转
+            
+            const currentX = e.clientX;
+            const currentY = e.clientY;
+            
+            desX = currentX - lastX;
+            desY = currentY - lastY;
+            
+            tX += desX * 0.1;
+            tY += desY * 0.1;
+            
+            updateTransform();
+            
+            lastX = currentX;
+            lastY = currentY;
+        }
+
+        function handleUp() {
+            isDragging = false;
+            document.removeEventListener('pointermove', handleMove);
+            document.removeEventListener('pointerup', handleUp);
+            
+            // 启动惯性动画
+            outDom.timer = setInterval(() => {
+                desX *= 0.95; // 摩擦系数
+                desY *= 0.95;
+                tX += desX * 0.1;
+                tY += desY * 0.1;
+                
+                updateTransform();
+                
+                // 速度低于阈值时停止
+                if (Math.abs(desX) < 0.5 && Math.abs(desY) < 0.5) {
+                    clearInterval(outDom.timer);
+                    toggleSpin(true);
+                }
+            }, 16); // 约60fps
+        }
+    </script>
+</body>
+</html>
