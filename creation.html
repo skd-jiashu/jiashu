@@ -46,20 +46,39 @@
     }
     
     /* ===========================================
-       视频卡片交互效果
+       视频卡片交互效果（修改后）
        =========================================== */
     .video-card {
       transition: all 0.3s ease;
     }
-    
+
     .video-card:hover {
       transform: translateY(-5px);
     }
-    
+
+    /* 遮罩层：允许点击穿透到 iframe，仅保留视觉效果 */
+    .video-card .relative.group > div.absolute {
+      pointer-events: none;
+    }
+
+    /* 播放按钮：恢复点击能力，hover 缩放效果保留 */
     .video-card:hover .play-icon {
       transform: scale(1.1);
+      pointer-events: auto;
     }
-    
+
+    .play-icon {
+      width: 16px;
+      height: 16px;
+      background: white/20;
+      backdrop-blur-sm;
+      border-radius: full;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform duration-300;
+    }
+
     /* ===========================================
        章节标签样式
        =========================================== */
